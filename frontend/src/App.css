@@ -1,0 +1,11 @@
+.app{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Sarabun',sans-serif;
+  color: #000000;
+  
+  /* background-image: url("https://static.thairath.co.th/media/4DQpjUtzLUwmJZZO80Rt2AP9etHdGdT3VWlnNjAmW20B.jpg"); */
+  height: 100vh;
+  
+}

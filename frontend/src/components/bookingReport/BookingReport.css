@@ -1,0 +1,27 @@
+.background___page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-image: url(https://scontent.fbkk2-5.fna.fbcdn.net/v/t1.6435-9/s960x960/169709735_3035530093346073_4323545248994245817_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeH7-_yBtY40fSp2flkQyFHtJrUfvfXPTk4mtR-99c9OTiqMXNPzgVp-P-ZVf2eYvI7BAuTcoA5xOVsysFxD5n4V&_nc_ohc=aTuBSQ0PhO4AX8wEyLo&_nc_ht=scontent.fbkk2-5.fna&oh=0af5db61a7094c4c3bf9ce52e7bcf1d1&oe=61A18EED);
+  height: 100%;
+  padding: 25px 0 0 0;
+  
+}
+
+.Text__P{
+  margin:  25px 0 0 0;
+}
+.BOX{
+  margin: 25px 0 0 0;
+}
+.background___page > h1 {
+  margin: 25px 0 0 0;
+}
+@media only screen and (max-device-width: 480px){
+  .BOX{
+    height: 20%;
+    width: 95%;
+    margin: 25px 0 0 0;
+  }
+}

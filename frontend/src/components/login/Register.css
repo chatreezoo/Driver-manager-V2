@@ -1,0 +1,22 @@
+.register__page{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1551150441-649e0b074fe4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+  object-fit: cover;
+  color: rgb(16, 12, 243);
+}
+.btn__register{
+  justify-content: center;
+  display: flex;
+  margin: 20px 0 0 0;
+}
+.btn__register > button{
+  margin: 0 30px 0 0;
+  height: 35px;
+  width: 75px;
+  border-radius: 8px;
+  background-color: aqua;
+}

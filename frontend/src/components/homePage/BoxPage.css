@@ -1,0 +1,29 @@
+.box__page {
+  display: flex;
+  align-items: center;
+  width: 350px;
+  height: 150px;
+  position: relative;
+  border-radius: 8px;
+  font-size: 36px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: rgb(72, 12, 80);
+  opacity: 0.8;
+  margin-bottom: 25px;
+  border: 1.5px solid #ffffff;
+  background-color: #d9cb89;
+}
+.box__page:hover {
+  transform: scale(1.05);
+}
+.box__page > img {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  border-radius: 50%;
+}
