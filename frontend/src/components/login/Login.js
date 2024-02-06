@@ -6,6 +6,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dataUsername = "xxx@gmail";
   const dataPassword = "123456";
+  console.log(password)
 
   function login() {
     if (username === dataUsername && password === dataPassword) {
