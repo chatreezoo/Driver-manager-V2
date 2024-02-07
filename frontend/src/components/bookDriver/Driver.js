@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SaveSharpIcon from "@mui/icons-material/SaveSharp";
 // import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -22,24 +22,7 @@ const Driver = () => {
   const [place, setPlace] = useState("");
   const [enddate, setEnddate] = useState("");
   const history = useHistory();
-  const carList = [
-    {
-      type: "รถตู้",
-      plate: "กท-10010",
-    },
-    {
-      type: "รถตู้",
-      plate: "กท-1000",
-    },
-    {
-      type: "รถกระบะ",
-      plate: "กท-1010",
-    },
-    {
-      type: "รถกระบะ",
-      plate: "กท-10010",
-    },
-  ];
+  const [carList, setCarList] = useState([]);
 
   const departmentList = [
     "บริหารสำนักงาน",
@@ -48,6 +31,13 @@ const Driver = () => {
     "พัฒนาความยั่งยืน",
     "ฟื้นฟูบรรเทาทุกข์",
   ];
+
+  useEffect(() => {
+    axios
+      .get('cars')
+      .then(res => setCarList(res.data))
+      .catch(err => console.log(err))
+  }, [])
   
   function handleClick() {
     history.push("/bookingReport");

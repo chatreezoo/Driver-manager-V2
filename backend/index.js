@@ -22,5 +22,7 @@ app.use(cors());
 
 const scheduleRouter = require("./routes/ScheduleRoute");
 app.use("/schedule", scheduleRouter);
+const CarRouter = require("./routes/CarRoute");
+app.use("/cars", CarRouter);
 
 app.listen(port, () => console.log(`Running on port:${port}`));
