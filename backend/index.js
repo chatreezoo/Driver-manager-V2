@@ -6,7 +6,7 @@ var mysql = require("mysql");
 // ตั้งค่า project
 const app = express();
 // ดึงค่า port จาก file env
-const port = process.env.PORT || 4000;
+const port = process.env.PORT ;
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
