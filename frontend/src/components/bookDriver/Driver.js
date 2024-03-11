@@ -10,27 +10,22 @@ import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
-
 const Driver = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [cars, setCars] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
-  const [name, setName] = useState("");
   const [depart, setDepart] = useState("");
+  const [name, setName] = useState("");
+  const [driver, setDriver] = useState("");
   const [objective, setObjective] = useState("");
   const [place, setPlace] = useState("");
   const [enddate, setEnddate] = useState("");
   const history = useHistory();
   const [carList, setCarList] = useState([]);
 
-  const departmentList = [
-    "บริหารสำนักงาน",
-    "เลนานุการผู้บริหาร",
-    "ภัยพิบัติ",
-    "พัฒนาความยั่งยืน",
-    "ฟื้นฟูบรรเทาทุกข์",
-  ];
+  const departmentList = ["เลือกคนขับ", "ขับเอง"];
 
   useEffect(() => {
     axios
@@ -45,6 +40,8 @@ const Driver = () => {
   function submit() {
     const post = {
       startDate: date,
+      cars: cars,
+      driver: driver,
       endDate: enddate,
       surname: name,
       department: depart,
@@ -92,10 +89,10 @@ const Driver = () => {
       <div className="Box">
         <h1 className="H1">กรุณากรอกข้อมูลให้ครบถ้วน</h1>
         <div className="date__box">
-          <div className="input__margin">
+          <div className="input__margin_1">
             <p className="P">วันที่บันทึกการจอง - วันที่ใช้งานรถ</p>
             <div className="date__box">
-              <div className="input__margin">
+              <div className="input__margin_1">
                 <TextField
                   color="primary"
                   fullWidth
@@ -104,7 +101,7 @@ const Driver = () => {
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
-              <div className="input__margin">
+              <div className="input__margin_1">
                 <TextField
                   color="primary"
                   fullWidth
@@ -114,9 +111,24 @@ const Driver = () => {
                 />
               </div>
             </div>
-            <p className="P">เวลาเริ่มใช้รถ-เวลาสิ่นสุดการใช้รถ</p>
+
+            <p className="P">รถ-ทะเบียน</p>
+            <Select
+              fullWidth
+              value={cars}
+              onChange={(e) => setCars(e.target.value)}
+            >
+              {carList.map((caritem) => (
+                <MenuItem
+                  value={caritem.plate}
+                >{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
+              ))}
+            </Select>
+          </div>
+          <div className="input__margin_1">
+            <p className="P">เวลาเริ่มใช้รถ - เวลาสิ่นสุดการใช้รถ</p>
             <div className="time__box">
-              <div className="input__margin">
+              <div className="input__margin_1">
                 <TextField
                   color="primary"
                   fullWidth
@@ -125,7 +137,7 @@ const Driver = () => {
                   onChange={(e) => setStartTime(e.target.value)}
                 />
               </div>
-              <div className="input__margin">
+              <div className="input__margin_1">
                 <TextField
                   color="primary"
                   fullWidth
@@ -135,27 +147,13 @@ const Driver = () => {
                 />
               </div>
             </div>
-          </div>
-          <div className="input__margin">
-            <p className="P">รถ-ทะเบียน</p>
-            <Select
-              fullWidth
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-            >
-              {carList.map((caritem) => (
-                <MenuItem
-                  value={caritem.plate}
-                >{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
-              ))}
-            </Select>
-            <p className="P">เลือกคนขับ</p>
+            <p className="P">ผู้ขับรถ</p>
             <Select
               labelId="L1"
               id="L1"
               fullWidth
-              value={depart}
-              onChange={(e) => setDepart(e.target.value)}
+              value={driver}
+              onChange={(e) => setDriver(e.target.value)}
             >
               {departmentList.map((item) => (
                 <MenuItem value={item}>{item}</MenuItem>
@@ -170,8 +168,8 @@ const Driver = () => {
               label="แผนก"
               color="primary"
               fullWidth
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={depart}
+              onChange={(e) => setDepart(e.target.value)}
             />
           </div>
           <div className="input__margin">
@@ -186,7 +184,7 @@ const Driver = () => {
 
           <div className="input__margin">
             <TextField
-              label="วัดถุประสงค์ในการใช้รถ"
+              label="สถานที่ปลายทาง"
               multiline
               fullWidth
               rows={1}
@@ -196,7 +194,7 @@ const Driver = () => {
           </div>
           <div className="input__margin">
             <TextField
-              label="สถานที่ปลายทาง"
+              label="วัดถุประสงค์ในการใช้รถ"
               multiline
               fullWidth
               rows={2}

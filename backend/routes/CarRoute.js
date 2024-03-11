@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
 
   // Use the connection pool to handle database queries
   con.query(sql, function(err, result) {
+    console.log(result)
     if (err) {
       console.log(err);
       res.send(err);
@@ -27,6 +28,7 @@ router.get("/", (req, res) => {
     res.send(result);
   });
 });
+
 
 module.exports = router;
 

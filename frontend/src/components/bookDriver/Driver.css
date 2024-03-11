@@ -49,6 +49,12 @@
   margin: 15px 0 0 0;
   
 }
+.input__margin_1{
+  width: 100%;
+  margin: 15px 0 0 0;
+  
+}
+
 .time__box {
   width: 60%;
   display:flex;
