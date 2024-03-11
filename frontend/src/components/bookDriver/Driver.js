@@ -34,11 +34,11 @@ const Driver = () => {
 
   useEffect(() => {
     axios
-      .get('cars')
-      .then(res => setCarList(res.data))
-      .catch(err => console.log(err))
-  }, [])
-  
+      .get("cars")
+      .then((res) => setCarList(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   function handleClick() {
     history.push("/bookingReport");
   }
@@ -72,7 +72,7 @@ const Driver = () => {
       axios
         .post("/schedule", post)
         .then(() => {
-          handleClick()
+          handleClick();
         })
         .catch((err) => console.log(err));
 
@@ -86,7 +86,6 @@ const Driver = () => {
       setEndTime("");
       console.log(post);
     }
-    
   }
   return (
     <div className="Dver__page">
@@ -94,7 +93,63 @@ const Driver = () => {
         <h1 className="H1">กรุณากรอกข้อมูลให้ครบถ้วน</h1>
         <div className="date__box">
           <div className="input__margin">
-            <p className="P">แผนก</p>
+            <p className="P">วันที่บันทึกการจอง - วันที่ใช้งานรถ</p>
+            <div className="date__box">
+              <div className="input__margin">
+                <TextField
+                  color="primary"
+                  fullWidth
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+              <div className="input__margin">
+                <TextField
+                  color="primary"
+                  fullWidth
+                  type="date"
+                  value={enddate}
+                  onChange={(e) => setEnddate(e.target.value)}
+                />
+              </div>
+            </div>
+            <p className="P">เวลาเริ่มใช้รถ-เวลาสิ่นสุดการใช้รถ</p>
+            <div className="time__box">
+              <div className="input__margin">
+                <TextField
+                  color="primary"
+                  fullWidth
+                  type="time"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                />
+              </div>
+              <div className="input__margin">
+                <TextField
+                  color="primary"
+                  fullWidth
+                  type="time"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="input__margin">
+            <p className="P">รถ-ทะเบียน</p>
+            <Select
+              fullWidth
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              {carList.map((caritem) => (
+                <MenuItem
+                  value={caritem.plate}
+                >{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
+              ))}
+            </Select>
+            <p className="P">เลือกคนขับ</p>
             <Select
               labelId="L1"
               id="L1"
@@ -107,67 +162,21 @@ const Driver = () => {
               ))}
             </Select>
           </div>
-          <div className="input__margin">
-            <p className="P">เลือกรถ</p>
-
-            <Select
-              fullWidth
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-            >
-              {carList.map((caritem) => (
-                <MenuItem value={caritem.plate}>{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
-                ))}
-            </Select>
-          </div>
-        </div>
-        <p className="P">วันที่เริ่มต้น-วันที่สิ้นสุด</p>
-        <div className="date__box">
-          <div className="input__margin">
-            <TextField
-              color="primary"
-              fullWidth
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-          <div className="input__margin">
-            <TextField
-              color="primary"
-              fullWidth
-              type="date"
-              value={enddate}
-              onChange={(e) => setEnddate(e.target.value)}
-            />
-          </div>
-        </div>
-        <p className="P">เวลาเริ่มต้น-เวลาสิ่นสุด</p>
-        <div className="time__box">
-          <div className="input__margin">
-            <TextField
-              color="primary"
-              fullWidth
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-            />
-          </div>
-          <div className="input__margin">
-            <TextField
-              color="primary"
-              fullWidth
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-            />
-          </div>
         </div>
 
         <div className="Text__ip">
           <div className="input__margin">
             <TextField
-              label="ผู้จอง"
+              label="แผนก"
+              color="primary"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="input__margin">
+            <TextField
+              label="ผู้บันทึก"
               color="primary"
               fullWidth
               value={name}
@@ -175,19 +184,9 @@ const Driver = () => {
             />
           </div>
 
-          {/* <div className="input__margin">
-            <TextField
-              label="แผนก"
-              color="primary"
-              fullWidth
-              value={depart}
-              onChange={(e) => setDepart(e.target.value)}
-            />
-          </div> */}
-
           <div className="input__margin">
             <TextField
-              label="จุดหมาย"
+              label="วัดถุประสงค์ในการใช้รถ"
               multiline
               fullWidth
               rows={1}
@@ -197,7 +196,7 @@ const Driver = () => {
           </div>
           <div className="input__margin">
             <TextField
-              label="วัดถุประสงค์"
+              label="สถานที่ปลายทาง"
               multiline
               fullWidth
               rows={2}

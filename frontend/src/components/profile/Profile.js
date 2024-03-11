@@ -39,8 +39,8 @@ const Profile = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const ID = "12345";
-  const PASSWORD = "12345";
+  const ID = "";
+  const PASSWORD = "";
   const [open, setOpen] = useState(false);
   const [rejectDialog, setRejectDialog] = useState(false);
   const [approve, setApprove] = useState("");
@@ -185,34 +185,21 @@ const Profile = () => {
               <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                   <TableHead>
-                    <TableRow>
-                      <StyledTableCell>ชื่อผู้จอง</StyledTableCell>
-                      <StyledTableCell align="right">แผนก</StyledTableCell>
-                      <StyledTableCell align="right">ประเภท</StyledTableCell>
-                      <StyledTableCell align="right">
-                        วัดถุประสงค์
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        จุดหมายปลายทาง
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        วันที่เริ่ม
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        วันที่สิ้นสุด
-                      </StyledTableCell>
-                      <StyledTableCell align="right">เวลาเริ่ม</StyledTableCell>
-                      <StyledTableCell align="right">
-                        เวลาสิ้นสุด
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        สถานะคำร้อง
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        ผู้อนุมัติ
-                      </StyledTableCell>
-                      <StyledTableCell align="right">ลบข้อมูล</StyledTableCell>
-                    </TableRow>
+                  <TableRow>
+                <StyledTableCell align='right'>วันที่บันทึกการจอง</StyledTableCell>
+                <StyledTableCell align='right'>วันที่ใช้งาน</StyledTableCell>
+                <StyledTableCell align='right'>เวลาเรื่มใช้งาน</StyledTableCell>
+                <StyledTableCell align='right'>เวลาคืนรถ</StyledTableCell>
+                <StyledTableCell align='right'>รถ-ทะเบียน</StyledTableCell>
+                <StyledTableCell align='right'>ผู้ขับรถ</StyledTableCell>
+                <StyledTableCell align='right'>ผู้บันทึก</StyledTableCell>
+                <StyledTableCell align='right'>แผนก</StyledTableCell>
+                <StyledTableCell align='right'>วัดถุประสงค์ที่ใช้รถ</StyledTableCell>
+                <StyledTableCell align='right'>สถานที่ปลายทาง</StyledTableCell>
+                <StyledTableCell align='right'>สถานะคำร้อง</StyledTableCell>
+                <StyledTableCell align='right'>ผู้อนุมัติ</StyledTableCell>
+                <StyledTableCell align='right'>หมายเหตุ</StyledTableCell>
+              </TableRow>
                   </TableHead>
                   <TableBody>
                     {data.map((item) => (

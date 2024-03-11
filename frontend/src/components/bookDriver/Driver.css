@@ -17,6 +17,9 @@
   width: 60%;
   margin: 25px 0 0 0;
 }
+.H1 {
+  margin: 50px;
+}
 .Text__ip {
   display: flex;
   flex-direction: column;
@@ -60,7 +63,7 @@
   display: flex;
 }
 .P{
-  margin: 10px 0 0 0;
+  margin: 40px 0 0 0;
 }
 @media only screen and (max-device-width: 480px) {
   .Box {
