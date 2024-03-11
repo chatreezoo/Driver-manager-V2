@@ -46,23 +46,13 @@ const Driver = () => {
       surname: name,
       department: depart,
       objective: objective,
-      type: type,
       startTime: startTime,
       endTime: endTime,
       place: place,
       time: `${startTime}- ${endTime}`,
     };
     if (
-      !(
-        date &&
-        type &&
-        depart &&
-        objective &&
-        name &&
-        startTime &&
-        endTime &&
-        enddate
-      )
+      !(date && depart && objective && name && startTime && endTime && enddate && cars && place && driver )
     ) {
       console.log("กรุณากรอกข้อมูลให้ครบถ้วน");
     } else {
