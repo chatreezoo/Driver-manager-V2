@@ -85,9 +85,9 @@ const Profile = () => {
   async function deleteData(item) {
     const data = { reason: reject, surname: item.surname };
     if (reject !== "") {
-    await axios.delete(`/schedule/${item.id}`, {data:data});
+      await axios.delete(`/schedule/${item.id}`, { data: data });
 
-    await loadlist();
+      await loadlist();
       setValidate(false);
       setReject("");
       handleRejectDialogClose();
@@ -185,46 +185,47 @@ const Profile = () => {
               <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                   <TableHead>
-                  <TableRow>
-                <StyledTableCell align='right'>วันที่บันทึกการจอง</StyledTableCell>
-                <StyledTableCell align='right'>วันที่ใช้งาน</StyledTableCell>
-                <StyledTableCell align='right'>เวลาเรื่มใช้งาน</StyledTableCell>
-                <StyledTableCell align='right'>เวลาคืนรถ</StyledTableCell>
-                <StyledTableCell align='right'>รถ-ทะเบียน</StyledTableCell>
-                <StyledTableCell align='right'>ผู้ขับรถ</StyledTableCell>
-                <StyledTableCell align='right'>ผู้บันทึก</StyledTableCell>
-                <StyledTableCell align='right'>แผนก</StyledTableCell>
-                <StyledTableCell align='right'>วัดถุประสงค์ที่ใช้รถ</StyledTableCell>
-                <StyledTableCell align='right'>สถานที่ปลายทาง</StyledTableCell>
-                <StyledTableCell align='right'>สถานะคำร้อง</StyledTableCell>
-                <StyledTableCell align='right'>ผู้อนุมัติ</StyledTableCell>
-                <StyledTableCell align='right'>หมายเหตุ</StyledTableCell>
-              </TableRow>
+                    <TableRow>
+                      <StyledTableCell align="right">
+                        วันที่บันทึกการจอง
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        วันที่ใช้งาน
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        เวลาเรื่มใช้งาน
+                      </StyledTableCell>
+                      <StyledTableCell align="right">เวลาคืนรถ</StyledTableCell>
+                      <StyledTableCell align="right">
+                        รถ-ทะเบียน
+                      </StyledTableCell>
+                      <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
+                      <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
+                      <StyledTableCell align="right">แผนก</StyledTableCell>
+                      <StyledTableCell align="right">
+                        วัดถุประสงค์ที่ใช้รถ
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        สถานที่ปลายทาง
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        สถานะคำร้อง
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        ผู้อนุมัติ
+                      </StyledTableCell>
+                      <StyledTableCell align="right">หมายเหตุ</StyledTableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
                     {data.map((item) => (
                       <>
                         <StyledTableRow key={item.id}>
                           <StyledTableCell component="th" scope="row">
-                            {item.surname}
+                          {dayjs(item.startDate).format("DD-MM-YYYY")}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {item.department}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.type}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.objective}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.place}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {dayjs(item.endDate).format("DD-MM-YYYY")}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {dayjs(item.endDate).format("DD-MM-YYYY")}
+                          {dayjs(item.endDate).format("DD-MM-YYYY")}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {item.startTime}
@@ -233,7 +234,22 @@ const Profile = () => {
                             {item.endTime}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {item.status}
+                            {item.cars}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {item.driver}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {item.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {item.department}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {item.objective}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {item.place}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             <Button
@@ -257,6 +273,9 @@ const Profile = () => {
                             >
                               ลบข้อมูล
                             </Button>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {item.reason ? item.reason:"-" }
                           </StyledTableCell>
                         </StyledTableRow>
                       </>

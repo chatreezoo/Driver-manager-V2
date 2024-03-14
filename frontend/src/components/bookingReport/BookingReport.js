@@ -89,10 +89,10 @@ const BookingReport = () => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{item.place}</StyledTableCell>
                   <StyledTableCell align="right">{item.status}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {item.approve}
+                  <StyledTableCell align="center">
+                    {item.approve ? item.approve: "-" }
                   </StyledTableCell>
-                  <StyledTableCell align="right">{item.reason}</StyledTableCell>
+                  <StyledTableCell align="center">{ item.reason ? item.reason: "-" }</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
