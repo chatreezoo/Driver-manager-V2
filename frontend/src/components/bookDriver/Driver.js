@@ -39,20 +39,30 @@ const Driver = () => {
   }
   function submit() {
     const post = {
-      startDate: date,
+      date: date,
       cars: cars,
       driver: driver,
       endDate: enddate,
-      surname: name,
+      name: name,
       department: depart,
       objective: objective,
       startTime: startTime,
       endTime: endTime,
       place: place,
-      time: `${startTime}- ${endTime}`,
     };
     if (
-      !(date && depart && objective && name && startTime && endTime && enddate && cars && place && driver )
+      !(
+        date &&
+        depart &&
+        objective &&
+        name &&
+        startTime &&
+        endTime &&
+        enddate &&
+        cars &&
+        place &&
+        driver
+      )
     ) {
       console.log("กรุณากรอกข้อมูลให้ครบถ้วน");
     } else {

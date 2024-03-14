@@ -36,50 +36,48 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const schedule = new scheduleModel({
-    startDate: req.body.startDate,
-    surname: req.body.surname,
+    cars: req.body.cars,
+    driver: req.body.driver,
+    date: req.body.date,
+    name: req.body.name,
+    place: req.body.place,
     department: req.body.department,
     objective: req.body.objective,
-    type: req.body.type,
-    time: req.body.time,
-    place: req.body.place,
+    startTime: req.body.startTime,
     endTime: req.body.endTime,
     startTime: req.body.startTime,
     endDate: req.body.endDate,
     status: "รอดำเนินการ",
     approve: null,
   });
-
+  console.log(schedule, "แสดง");
   var sql = `INSERT INTO schedule (
-    startDate,
-    surname,
+    date,
+    cars,
+    driver,
+    endDate,
+    name,
     department,
     objective,
-    type,
-    time,
-    place,
-    endTime,
     startTime,
-    endDate,
-    status,
-    approve
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    place,
+    endTime
+
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
 
   con.query(
     sql,
     [
-      schedule.startDate,
-      schedule.surname,
+      schedule.date,
+      schedule.cars,
+      schedule.driver,
+      schedule.endDate,
+      schedule.name,
       schedule.department,
       schedule.objective,
-      schedule.type,
-      schedule.time,
+      schedule.startTime,
       schedule.place,
       schedule.endTime,
-      schedule.startTime,
-      schedule.endDate,
-      schedule.status,
-      schedule.approve,
     ],
     function(err, result) {
       if (err) {
@@ -179,7 +177,7 @@ function sendRejectNoti(name, reason) {
       method: "POST",
       uri: "https://notify-api.line.me/api/notify",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       auth: {
         bearer: token,

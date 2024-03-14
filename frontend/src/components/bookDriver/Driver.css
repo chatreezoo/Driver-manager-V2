@@ -78,7 +78,10 @@
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
-    height: 100%;
+    height: 80%;
     width: 350px;
+  }
+  .date__box{
+    display: contents;
   }
 }
