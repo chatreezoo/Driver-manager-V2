@@ -47,28 +47,30 @@
 .input__margin {
   width: 60%;
   margin: 15px 0 0 0;
-  
 }
-.input__margin_1{
+.input__margin_1 {
   width: 100%;
-  margin: 15px 0 0 0;
-  
 }
 
 .time__box {
-  width: 60%;
-  display:flex;
+  width: 100%;
+  display: flex;
   gap: 20px;
 }
-.date__box{
+.date__box {
   display: flex;
   width: 60%;
   gap: 20px;
 }
-.input__margint{
+.date__box_1{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+.input__margint {
   display: flex;
 }
-.P{
+.P {
   margin: 40px 0 0 0;
 }
 @media only screen and (max-device-width: 480px) {
@@ -81,7 +83,7 @@
     height: 80%;
     width: 350px;
   }
-  .date__box{
+  .date__box {
     display: contents;
   }
 }

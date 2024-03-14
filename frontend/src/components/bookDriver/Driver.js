@@ -91,7 +91,7 @@ const Driver = () => {
         <div className="date__box">
           <div className="input__margin_1">
             <p className="P">วันที่บันทึกการจอง - วันที่ใช้งานรถ</p>
-            <div className="date__box">
+            <div className="date__box_1">
               <div className="input__margin_1">
                 <TextField
                   color="primary"
