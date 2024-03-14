@@ -61,9 +61,9 @@ router.post("/", (req, res) => {
     objective,
     startTime,
     place,
-    endTime
-
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
+    endTime,
+    status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
 
   con.query(
     sql,
@@ -78,6 +78,7 @@ router.post("/", (req, res) => {
       schedule.startTime,
       schedule.place,
       schedule.endTime,
+      schedule.status,
     ],
     function(err, result) {
       if (err) {
