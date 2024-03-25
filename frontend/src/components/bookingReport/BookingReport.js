@@ -51,6 +51,7 @@ const BookingReport = () => {
                 <StyledTableCell align="right">เวลาเรื่มใช้งาน</StyledTableCell>
                 <StyledTableCell align="right">เวลาคืนรถ</StyledTableCell>
                 <StyledTableCell align="right">รถ-ทะเบียน</StyledTableCell>
+                <StyledTableCell align="right">สถานะผู้ขับ</StyledTableCell>
                 <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
                 <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
                 <StyledTableCell align="right">แผนก</StyledTableCell>
@@ -80,6 +81,7 @@ const BookingReport = () => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{item.cars}</StyledTableCell>
                   <StyledTableCell align="right">{item.driver}</StyledTableCell>
+                  <StyledTableCell align="right">{item.driver_name ?  item.driver_name: "-"}</StyledTableCell>
                   <StyledTableCell align="right">{item.name}</StyledTableCell>
                   <StyledTableCell align="right">
                     {item.department}
