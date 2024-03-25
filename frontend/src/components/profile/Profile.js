@@ -21,6 +21,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { MenuItem, Select, TextField } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import * as dayjs from "dayjs";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -84,7 +85,18 @@ const Profile = () => {
     }
   }
 
-  console.log("reject reason", reject);
+  function returncar(item) {
+    const data = {
+      cars:item.cars
+    }
+    if (window.confirm("ยืนยันคืนรถหรือไม่")) {
+      axios
+        .post("cars/time", data)
+        .then((res) => console.log(res, 5555))
+        .catch((err) => console.log(err));
+    }
+  }
+
   async function deleteData(item) {
     const data = { reason: reject, surname: item.surname };
     if (reject !== "") {
@@ -230,6 +242,9 @@ const Profile = () => {
                         ปฏิเสธคำขอ
                       </StyledTableCell>
                       <StyledTableCell align="right">หมายเหตุ</StyledTableCell>
+                      <StyledTableCell align="right">
+                        สถานะคืนรถ
+                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -297,6 +312,16 @@ const Profile = () => {
                           </StyledTableCell>
                           <StyledTableCell align="center">
                             {item.reason ? item.reason : "-"}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <Button
+                              variant="contained"
+                              startIcon={<AssignmentTurnedInIcon />}
+                              color="success"
+                              onClick={() => returncar(item)}
+                            >
+                              คืนรถ
+                            </Button>
                           </StyledTableCell>
                         </StyledTableRow>
                       </>

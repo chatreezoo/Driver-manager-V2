@@ -28,6 +28,21 @@ router.get("/", (req, res) => {
     res.send(result);
   });
 });
+router.post("/time", (req, res) => {
+  const plate = req.body.cars;
+  const sql= `UPDATE cars SET update_time = ? WHERE plate =?`
+console.log(plate,"+รอก")
+  const time = (new Date()).toISOString()
+  con.query(sql, [time,plate], function(err, result) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+      return;
+    }
+    res.send(result);
+  });
+});
+
 
 
 module.exports = router;
