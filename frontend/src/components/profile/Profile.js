@@ -18,7 +18,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TextField } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import * as dayjs from "dayjs";
 
@@ -49,9 +49,8 @@ const Profile = () => {
   const [deleteItem, setDeleteItem] = useState({});
   const [warning, setWarning] = useState(false);
   const [validate, setValidate] = useState(false);
-  const [employee, setEmployee] = useState([]);
-  console.log(employee,"พนังงาน")
-
+  const [employee, setEmployee] = useState();
+  const [employeeList, setEmployeeList] = useState([]);
 
   const handleRejectDialogOpen = (item) => {
     setRejectDialog(true);
@@ -140,9 +139,10 @@ const Profile = () => {
   useEffect(() => {
     axios
       .get("employee")
-      .then((res) => setEmployee(res.data))
+      .then((res) => setEmployeeList(res.data))
       .catch((err) => console.log(err));
   }, []);
+  console.log(employee,"รอก")
 
   return (
     <div className="profile__page">
@@ -264,10 +264,11 @@ const Profile = () => {
                           <StyledTableCell align="right">
                             {item.place}
                           </StyledTableCell>
-                          <StyledTableCell align="right">{item.status}
+                          <StyledTableCell align="right">
+                            {item.status}
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                          <Button
+                            <Button
                               disabled={
                                 item.status === "รอดำเนินการ" ? false : true
                               }
@@ -280,7 +281,7 @@ const Profile = () => {
                             </Button>
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                          <Button
+                            <Button
                               disabled={
                                 item.status === "รอดำเนินการ" ? false : true
                               }
@@ -325,6 +326,17 @@ const Profile = () => {
             value={approve}
             onChange={(e) => setApprove(e.target.value)}
           />
+          <Select
+            fullWidth
+            value={employee}
+            onChange={(e) => setEmployee(e.target.value)}
+          >
+            {employeeList.map((xxx) => (
+              <MenuItem
+                value={xxx}
+              >{` ชื่อผู้ขับ : ${xxx.name}. สถานะ  ${xxx.status} `}</MenuItem>
+            ))}
+          </Select>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => approveData(item)}>อนุมัติคำขอ</Button>
