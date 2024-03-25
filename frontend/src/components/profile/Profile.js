@@ -65,6 +65,7 @@ const Profile = () => {
   const handleClickOpen = (item) => {
     setOpen(true);
     setItem(item);
+    console.log(item.driver, "5555");
   };
 
   const handleClose = () => {
@@ -105,6 +106,7 @@ const Profile = () => {
       department: item.department,
       surname: item.surname,
       type: item.type,
+      employee: employee,
     };
 
     if (approve !== "") {
@@ -142,7 +144,7 @@ const Profile = () => {
       .then((res) => setEmployeeList(res.data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(employee,"รอก")
+  console.log(employee, "รอก");
 
   return (
     <div className="profile__page">
@@ -319,6 +321,7 @@ const Profile = () => {
           {warning === true ? (
             <p style={{ color: "red" }}>กรุณากรอกข้อมูล</p>
           ) : null}
+
           <TextField
             color="primary"
             fullWidth
@@ -326,17 +329,24 @@ const Profile = () => {
             value={approve}
             onChange={(e) => setApprove(e.target.value)}
           />
-          <Select
-            fullWidth
-            value={employee}
-            onChange={(e) => setEmployee(e.target.value)}
-          >
-            {employeeList.map((xxx) => (
-              <MenuItem
-                value={xxx}
-              >{` ชื่อผู้ขับ : ${xxx.name}. สถานะ  ${xxx.status} `}</MenuItem>
-            ))}
-          </Select>
+          {item.driver === "เลือกคนขับ" ? (
+            <div>
+              <p style={{ marginTop: "10px", marginBottom: "10px" }}>
+                เลือกคนขับ
+              </p>
+              <Select
+                fullWidth
+                value={employee}
+                onChange={(e) => setEmployee(e.target.value)}
+              >
+                {employeeList.map((xxx) => (
+                  <MenuItem
+                    value={xxx}
+                  >{` ชื่อผู้ขับ : ${xxx.name}. สถานะ  ${xxx.status} `}</MenuItem>
+                ))}
+              </Select>
+            </div>
+          ) : null}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => approveData(item)}>อนุมัติคำขอ</Button>
