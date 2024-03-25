@@ -102,6 +102,7 @@ router.put("/:id", (req, res) => {
   let approve = req.body.approve;
   let status = req.body.status;
   let reason = req.body?.data?.reason;
+  const driver_name = req.body.employee.name;
 let sql= ""
 console.log(reason+"นี่คือริซั่น")
   if (reason) {
@@ -109,9 +110,9 @@ console.log(reason+"นี่คือริซั่น")
   status = "ไม่อนุมัติ"
   approve = reason
 } else {
-  sql = `UPDATE schedule SET approve = ?, status = ? WHERE id =?`;
+  sql = `UPDATE schedule SET approve = ?, status = ?,driver_name =? WHERE id =?`;
   }
-  con.query(sql, [approve, status, req.params.id], function(err, result) {
+  con.query(sql, [approve, status,driver_name, req.params.id], function(err, result) {
     if (err) {
       console.log(err);
       res.send(err);
