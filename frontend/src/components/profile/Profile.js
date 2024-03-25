@@ -49,6 +49,9 @@ const Profile = () => {
   const [deleteItem, setDeleteItem] = useState({});
   const [warning, setWarning] = useState(false);
   const [validate, setValidate] = useState(false);
+  const [employee, setEmployee] = useState([]);
+  console.log(employee,"พนังงาน")
+
 
   const handleRejectDialogOpen = (item) => {
     setRejectDialog(true);
@@ -132,6 +135,13 @@ const Profile = () => {
   }
   useEffect(() => {
     loadlist();
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("employee")
+      .then((res) => setEmployee(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
