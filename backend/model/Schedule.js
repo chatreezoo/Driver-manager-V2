@@ -14,7 +14,8 @@ const ScheduleSchema = new Schema({
     endTime : {type:String, require:true},
     place : {type:String, require:true},
     status: {type:String, require:false},
-    approve: {type:String, require:false}
+    approve: {type:String, require:false},
+    reason: {type:String, require:false}
     
 })
 

@@ -85,7 +85,7 @@ const Profile = () => {
   async function deleteData(item) {
     const data = { reason: reject, surname: item.surname };
     if (reject !== "") {
-      await axios.delete(`/schedule/${item.id}`, { data: data });
+      await axios.put(`/schedule/${item.id}`, { data: data });
 
       await loadlist();
       setValidate(false);
@@ -214,6 +214,9 @@ const Profile = () => {
                       <StyledTableCell align="right">
                         ผู้อนุมัติ
                       </StyledTableCell>
+                      <StyledTableCell align="right">
+                        ปฏิเสธคำขอ
+                      </StyledTableCell>
                       <StyledTableCell align="right">หมายเหตุ</StyledTableCell>
                     </TableRow>
                   </TableHead>
@@ -222,10 +225,10 @@ const Profile = () => {
                       <>
                         <StyledTableRow key={item.id}>
                           <StyledTableCell component="th" scope="row">
-                          {dayjs(item.startDate).format("DD-MM-YYYY")}
+                            {dayjs(item.startDate).format("DD-MM-YYYY")}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                          {dayjs(item.endDate).format("DD-MM-YYYY")}
+                            {dayjs(item.endDate).format("DD-MM-YYYY")}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {item.startTime}
@@ -251,8 +254,10 @@ const Profile = () => {
                           <StyledTableCell align="right">
                             {item.place}
                           </StyledTableCell>
-                          <StyledTableCell align="right">
-                            <Button
+                          <StyledTableCell align="right">{item.status}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                          <Button
                               disabled={
                                 item.status === "รอดำเนินการ" ? false : true
                               }
@@ -264,18 +269,21 @@ const Profile = () => {
                               ลงชื่อผู้อนุมัติ
                             </Button>
                           </StyledTableCell>
-                          <StyledTableCell align="right">
-                            <Button
+                          <StyledTableCell align="center">
+                          <Button
+                              disabled={
+                                item.status === "รอดำเนินการ" ? false : true
+                              }
                               variant="contained"
                               startIcon={<DeleteIcon />}
-                              color="error"
+                              color="warning"
                               onClick={() => handleRejectDialogOpen(item)}
                             >
-                              ลบข้อมูล
+                              ปฏิเสธ
                             </Button>
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                            {item.reason ? item.reason:"-" }
+                            {item.reason ? item.reason : "-"}
                           </StyledTableCell>
                         </StyledTableRow>
                       </>
