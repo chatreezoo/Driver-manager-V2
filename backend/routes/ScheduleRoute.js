@@ -97,7 +97,7 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const car = req?.body?.cars;
-  const name = req?.body?.name;
+  const name = req?.body?.name|| req?.body?.data?.name;
   const department = req?.body?.department;
   const type = req?.body?.type;
   let approve = req?.body?.approve;
@@ -105,19 +105,20 @@ router.put("/:id", (req, res) => {
   let reason = req?.body?.data?.reason;
   const driver_name = req?.body?.employee?.name;
 let sql= ""
-console.log(reason+"นี่คือริซั่น")
+console.log(req.body.data.name,"นี่คือริซั่น")
+
   if (reason) {
   sql = `UPDATE schedule SET reason = ?, status = ? WHERE id =?`;
   status = "ไม่อนุมัติ"
-  approve = reason
-  con.query(sql, [approve, status,driver_name, req.params.id], function(err, result) {
+  
+  con.query(sql, [reason, status, req.params.id], function(err, result) {
     if (err) {
       console.log(err);
       res.send(err);
       return;
     }
     res.send(result);
-    sendnotification(name, department, car, approve);
+    sendRejectNoti(name,reason);
   });
 } else {
   sql = `UPDATE schedule SET approve = ?, status = ?,driver_name =? WHERE id =?`;
@@ -151,7 +152,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const surname = req.body.surname;
+  const name = req.body.name;
   const reason = req.body.reason;
   const sql = `DELETE FROM schedule WHERE id=?`;
   con.query(sql, [req.params.id], function(err, result) {
@@ -160,7 +161,7 @@ router.delete("/:id", (req, res) => {
       res.send(err);
       return;
     }
-    sendRejectNoti(surname, reason);
+    sendRejectNoti(name, reason);
     res.send(result);
   });
 });

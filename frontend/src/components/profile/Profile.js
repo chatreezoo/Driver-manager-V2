@@ -87,9 +87,9 @@ const Profile = () => {
 
   function returncar(item) {
     const data = {
-      cars:item.cars,
-      id:item.id
-    }
+      cars: item.cars,
+      id: item.id,
+    };
     if (window.confirm("ยืนยันคืนรถหรือไม่")) {
       axios
         .post("cars/time", data)
@@ -99,7 +99,7 @@ const Profile = () => {
   }
 
   async function deleteData(item) {
-    const data = { reason: reject, surname: item.surname };
+    const data = { reason: reject, name: item.name };
     if (reject !== "") {
       await axios.put(`/schedule/${item.id}`, { data: data });
 
@@ -120,10 +120,9 @@ const Profile = () => {
       name: item.name,
       type: item.type,
       employee: employee,
-      cars: item.cars
-    
+      cars: item.cars,
     };
-    console.log(item,"023")
+    console.log(item, "023");
 
     if (approve !== "") {
       const edit = await axios
@@ -319,14 +318,16 @@ const Profile = () => {
                           </StyledTableCell>
                           <StyledTableCell align="center">
                             <Button
-                            disabled={
-                              item.is_return_car === 1 || item.status === "รอดำเนินการ"  ? true : false
-                            }
+                              disabled={
+                                item.is_return_car === 1 ||
+                                item.status === "รอดำเนินการ"
+                                  ? true
+                                  : false
+                              }
                               variant="contained"
                               startIcon={<AssignmentTurnedInIcon />}
                               color="success"
                               onClick={() => returncar(item)}
-                              
                             >
                               คืนรถ
                             </Button>
