@@ -320,7 +320,7 @@ const Profile = () => {
                           <StyledTableCell align="center">
                             <Button
                             disabled={
-                              item.is_return_car  ? true : false
+                              item.is_return_car === 1 || item.status === "รอดำเนินการ"  ? true : false
                             }
                               variant="contained"
                               startIcon={<AssignmentTurnedInIcon />}
