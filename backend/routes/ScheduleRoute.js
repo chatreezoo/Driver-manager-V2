@@ -96,13 +96,13 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  const surname = req.body.surname;
-  const department = req.body.department;
-  const type = req.body.type;
-  let approve = req.body.approve;
-  let status = req.body.status;
-  let reason = req.body?.data?.reason;
-  const driver_name = req.body.employee.name;
+  const surname = req?.body?.surname;
+  const department = req?.body?.department;
+  const type = req?.body?.type;
+  let approve = req?.body?.approve;
+  let status = req?.body?.status;
+  let reason = req?.body?.data?.reason;
+  const driver_name = req?.body?.employee?.name;
 let sql= ""
 console.log(reason+"นี่คือริซั่น")
   if (reason) {

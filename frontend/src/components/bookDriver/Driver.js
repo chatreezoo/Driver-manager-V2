@@ -30,9 +30,35 @@ const Driver = () => {
   useEffect(() => {
     axios
       .get("cars")
-      .then((res) => setCarList(res.data))
+      .then((res) => {
+        const arr = [];
+        const result = res.data;
+        if (result.length > 0) {
+          result.forEach((x) => {
+            if (isMoreThanOneHourAgo(x.update_time)) {
+              arr.push(x);
+            }
+          });
+        }
+        setCarList(arr);
+      })
       .catch((err) => console.log(err));
   }, []);
+
+  function isMoreThanOneHourAgo(time) {
+    if (!time) {
+      return true;
+    }
+    const providedTime = new Date(time);
+
+    const currentTime = new Date();
+
+    const timeDifference = currentTime - providedTime;
+
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    return hoursDifference > 1;
+  }
 
   function handleClick() {
     history.push("/bookingReport");
