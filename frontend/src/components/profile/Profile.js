@@ -117,7 +117,7 @@ const Profile = () => {
       status: "อนุมัติคำร้อง",
       approve: approve,
       department: item.department,
-      surname: item.surname,
+      name: item.name,
       type: item.type,
       employee: employee,
       cars: item.cars

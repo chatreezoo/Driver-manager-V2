@@ -49,15 +49,23 @@ const Driver = () => {
     if (!time) {
       return true;
     }
-    const providedTime = new Date(time);
+    // Create two Date objects for comparison
+    const startTime = new Date(); // Replace with your start time
+    const endTime = new Date(time); // Replace with your end time
 
-    const currentTime = new Date();
+    // Calculate the time difference in milliseconds
+    const timeDiff =  Math.abs(endTime - startTime);
 
-    const timeDifference = currentTime - providedTime;
+    // Convert milliseconds to hours
+    const hoursDiff = timeDiff / (1000 * 60 * 60);
 
-    const hoursDifference = timeDifference / (1000 * 60 * 60);
-
-    return hoursDifference > 1;
+    // Check if the time difference is more than 1 hour
+    console.log("The time difference is not more than 1 hour.");
+    if (hoursDiff > 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   function handleClick() {

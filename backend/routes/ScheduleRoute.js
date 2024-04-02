@@ -97,7 +97,7 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const car = req?.body?.cars;
-  const surname = req?.body?.surname;
+  const name = req?.body?.name;
   const department = req?.body?.department;
   const type = req?.body?.type;
   let approve = req?.body?.approve;
@@ -117,7 +117,7 @@ console.log(reason+"นี่คือริซั่น")
       return;
     }
     res.send(result);
-    sendnotification(surname, department, type, approve);
+    sendnotification(name, department, car, approve);
   });
 } else {
   sql = `UPDATE schedule SET approve = ?, status = ?,driver_name =? WHERE id =?`;
@@ -137,7 +137,7 @@ console.log(reason+"นี่คือริซั่น")
       }
     });
     res.send(result);
-    sendnotification(surname, department, type, approve);
+    sendnotification(name, department, car, approve);
   });
   }
   
@@ -165,8 +165,8 @@ router.delete("/:id", (req, res) => {
   });
 });
 
-function sendnotification(name, department, type, approve) {
-  var sendData = `ชื่อผู้จอง : ${name}\n แผนก: ${department}\n ประเภทรถ: ${type}\n คนอนุมัติ: ${approve}\n ตรวจสอบสถานะรายการจอง: https://driver-manager.vercel.app/bookingReport`;
+function sendnotification(name, department, xxx, approve) {
+  var sendData = `ชื่อผู้จอง : ${name}\n แผนก: ${department}\n ประเภทรถ: ${xxx}\n คนอนุมัติ: ${approve}\n ตรวจสอบสถานะรายการจอง: https://driver-manager.vercel.app/bookingReport`;
   var token = "YQPZOvgos8jdY7rdppYndNUtdoSLXy1w7vNtWSMXj1d";
   var message = sendData;
 
