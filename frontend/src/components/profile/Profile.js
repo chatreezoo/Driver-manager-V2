@@ -93,7 +93,7 @@ const Profile = () => {
     if (window.confirm("ยืนยันคืนรถหรือไม่")) {
       axios
         .post("cars/time", data)
-        .then((res) => console.log(res, 5555))
+        .then((res) => loadlist())
         .catch((err) => console.log(err));
     }
   }
@@ -319,6 +319,9 @@ const Profile = () => {
                           </StyledTableCell>
                           <StyledTableCell align="center">
                             <Button
+                            disabled={
+                              item.is_return_car  ? true : false
+                            }
                               variant="contained"
                               startIcon={<AssignmentTurnedInIcon />}
                               color="success"
