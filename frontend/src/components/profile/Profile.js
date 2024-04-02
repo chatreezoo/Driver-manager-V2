@@ -87,7 +87,8 @@ const Profile = () => {
 
   function returncar(item) {
     const data = {
-      cars:item.cars
+      cars:item.cars,
+      id:item.id
     }
     if (window.confirm("ยืนยันคืนรถหรือไม่")) {
       axios
@@ -119,7 +120,10 @@ const Profile = () => {
       surname: item.surname,
       type: item.type,
       employee: employee,
+      cars: item.cars
+    
     };
+    console.log(item,"023")
 
     if (approve !== "") {
       const edit = await axios
@@ -319,6 +323,7 @@ const Profile = () => {
                               startIcon={<AssignmentTurnedInIcon />}
                               color="success"
                               onClick={() => returncar(item)}
+                              
                             >
                               คืนรถ
                             </Button>

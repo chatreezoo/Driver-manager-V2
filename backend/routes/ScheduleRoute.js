@@ -96,6 +96,7 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+  const car = req?.body?.cars;
   const surname = req?.body?.surname;
   const department = req?.body?.department;
   const type = req?.body?.type;
@@ -109,9 +110,6 @@ console.log(reason+"นี่คือริซั่น")
   sql = `UPDATE schedule SET reason = ?, status = ? WHERE id =?`;
   status = "ไม่อนุมัติ"
   approve = reason
-} else {
-  sql = `UPDATE schedule SET approve = ?, status = ?,driver_name =? WHERE id =?`;
-  }
   con.query(sql, [approve, status,driver_name, req.params.id], function(err, result) {
     if (err) {
       console.log(err);
@@ -121,6 +119,28 @@ console.log(reason+"นี่คือริซั่น")
     res.send(result);
     sendnotification(surname, department, type, approve);
   });
+} else {
+  sql = `UPDATE schedule SET approve = ?, status = ?,driver_name =? WHERE id =?`;
+  con.query(sql, [approve, status,driver_name, req.params.id], function(err, result) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+      return;
+    }
+    const time = (new Date())
+    const sql2 =  `UPDATE cars SET update_time = ? WHERE plate =?`;
+    con.query(sql2, [time,car], function(err, result) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+    });
+    res.send(result);
+    sendnotification(surname, department, type, approve);
+  });
+  }
+  
 });
 
 router.get("/:id", (req, res) => {
