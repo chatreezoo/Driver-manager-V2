@@ -376,7 +376,7 @@ const Profile = () => {
                 {employeeList.map((xxx) => (
                   <MenuItem
                     value={xxx}
-                  >{` ชื่อผู้ขับ : ${xxx.name}. สถานะ  ${xxx.status} `}</MenuItem>
+                  >{` ชื่อผู้ขับ : ${xxx.name} `}</MenuItem>
                 ))}
               </Select>
             </div>

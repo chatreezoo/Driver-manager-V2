@@ -105,7 +105,6 @@ router.put("/:id", (req, res) => {
   let reason = req?.body?.data?.reason;
   const driver_name = req?.body?.employee?.name;
 let sql= ""
-console.log(req.body.data.name,"นี่คือริซั่น")
 
   if (reason) {
   sql = `UPDATE schedule SET reason = ?, status = ? WHERE id =?`;
