@@ -167,7 +167,7 @@ router.delete("/:id", (req, res) => {
 });
 
 function sendnotification(name, department, xxx, approve,driver_name) {
-  var sendData = `ชื่อผู้จอง : ${name}\n แผนก: ${department}\n ประเภทรถ: ${xxx}\n คนขับ: ${driver_name}\n คนอนุมัติ: ${approve}\n ตรวจสอบสถานะรายการจอง: https://driver-manager.vercel.app/bookingReport`;
+  var sendData = `ชื่อผู้จอง : ${name}\n แผนก: ${department}\n ประเภทรถ: ${xxx}\n คนขับ: ${!driver_name ?name :driver_name}\n คนอนุมัติ: ${approve}\n ตรวจสอบสถานะรายการจอง: https://driver-manager.vercel.app/bookingReport`;
   var token = "YQPZOvgos8jdY7rdppYndNUtdoSLXy1w7vNtWSMXj1d";
   var message = sendData;
 
