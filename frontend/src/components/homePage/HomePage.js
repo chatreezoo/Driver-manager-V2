@@ -7,13 +7,14 @@ const HomePage = () => {
   return (
     <div className="home__page">
       <h1 className="H1" >มูลนิธิอาสาเพื่อนพึ่ง(ภาฯ) ยามยาก สภากาชาดไทย</h1>
+      {/* <div className="roporttest" >dki</div> */}
       <div className="container__home">
         <div className="box__top">
           <Link to="/driver" style={{ textDecoration: "none" }}>
             <BoxPage title="จองรถ" />
           </Link>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-            <BoxPage title="จัดการตารางจอง" />
+            <BoxPage title="อนุมัติ"/>
           </Link>
         </div>
         <div className="box__buttom">

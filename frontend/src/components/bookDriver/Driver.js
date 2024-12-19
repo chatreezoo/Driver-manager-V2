@@ -84,6 +84,7 @@ const Driver = () => {
       endTime: endTime,
       place: place,
     };
+    console.log(post,"body")
     if (
       !(
         date &&
@@ -98,7 +99,7 @@ const Driver = () => {
         driver
       )
     ) {
-      console.log("กรุณากรอกข้อมูลให้ครบถ้วน");
+      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     } else {
       axios
         .post("/schedule", post)
