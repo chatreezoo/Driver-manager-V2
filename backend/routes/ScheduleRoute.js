@@ -5,7 +5,7 @@ var request = require("request");
 var mysql = require("mysql");
 
 var con = mysql.createConnection({
-  ost: process.env.HOST,
+  host: process.env.HOST,
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
