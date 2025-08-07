@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="home__page">
-      <h1 className="H1" >มูลนิธิอาสาเพื่อนพึ่ง(ภาฯ) ยามยาก สภากาชาดไทย5555</h1>
+      <h1 className="H1" >มูลนิธิอาสาเพื่อนพึ่ง(ภาฯ) ยามยาก สภากาชาดไทย</h1>
       {/* <div className="roporttest" >dki</div> */}
       <div className="container__home">
         <div className="box__top">

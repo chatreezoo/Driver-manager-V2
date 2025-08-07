@@ -47,13 +47,14 @@ const BookingReport = () => {
                 <StyledTableCell align="right">
                   วันที่บันทึกการจอง
                 </StyledTableCell>
-                <StyledTableCell align="right">วันที่ใช้งาน</StyledTableCell>
-                <StyledTableCell align="right">เวลาเรื่มใช้งาน</StyledTableCell>
-                <StyledTableCell align="right">เวลาคืนรถ</StyledTableCell>
+                <StyledTableCell align="right">วันที่ใช้รถ</StyledTableCell>
+                <StyledTableCell align="right">เวลาเรื่มใช้รถ</StyledTableCell>
+                <StyledTableCell align="right">เวลากลับคืนรถ</StyledTableCell>
                 <StyledTableCell align="right">รถ-ทะเบียน</StyledTableCell>
                 <StyledTableCell align="right">สถานะผู้ขับ</StyledTableCell>
                 <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
-                <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
+                <StyledTableCell align="right">ผู้จอง</StyledTableCell>
+                <StyledTableCell align="right">จำนวนผู้โดยสาร</StyledTableCell>
                 <StyledTableCell align="right">แผนก</StyledTableCell>
                 <StyledTableCell align="right">
                   วัดถุประสงค์ที่ใช้รถ
@@ -61,6 +62,8 @@ const BookingReport = () => {
                 <StyledTableCell align="right">สถานที่ปลายทาง</StyledTableCell>
                 <StyledTableCell align="right">สถานะคำร้อง</StyledTableCell>
                 <StyledTableCell align="right">ผู้อนุมัติ</StyledTableCell>
+                <StyledTableCell align="right">เลขไมล์รถก่อนเดินทาง</StyledTableCell>
+                <StyledTableCell align="right">เลขไมล์รถหลังเดินทางกลับ</StyledTableCell>
                 <StyledTableCell align="right">หมายเหตุ</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -81,7 +84,9 @@ const BookingReport = () => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{item.cars}</StyledTableCell>
                   <StyledTableCell align="right">{item.driver}</StyledTableCell>
-                  <StyledTableCell align="right">{item.driver_name ?  item.driver_name: "-"}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {item.driver_name ? item.driver_name : "-"}
+                  </StyledTableCell>
                   <StyledTableCell align="right">{item.name}</StyledTableCell>
                   <StyledTableCell align="right">
                     {item.department}
@@ -92,9 +97,11 @@ const BookingReport = () => {
                   <StyledTableCell align="right">{item.place}</StyledTableCell>
                   <StyledTableCell align="right">{item.status}</StyledTableCell>
                   <StyledTableCell align="center">
-                    {item.approve ? item.approve: "-" }
+                    {item.approve ? item.approve : "-"}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{ item.reason ? item.reason: "-" }</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reason ? item.reason : "-"}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
