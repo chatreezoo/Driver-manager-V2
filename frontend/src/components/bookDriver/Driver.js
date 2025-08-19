@@ -209,7 +209,7 @@ const Driver = () => {
           </div>
           <div className="input__margin">
             <TextField
-              label="ผู้บันทึก"
+              label="ผู้จอง"
               color="primary"
               fullWidth
               value={name}
@@ -219,7 +219,7 @@ const Driver = () => {
 
           <div className="input__margin">
             <TextField
-              label="สถานที่ปลายทาง"
+              label="สถานที่"
               multiline
               fullWidth
               rows={1}

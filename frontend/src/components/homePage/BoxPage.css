@@ -1,7 +1,7 @@
 .box__page {
   display: flex;
   align-items: center;
-  width: 150px;
+  width: 350px;
   height: 100px;
   position: relative;
   border-radius: 8px;
@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
-  color: rgb(12, 11, 12);
+  color: rgb(27, 26, 15);
   opacity: 0.8;
   margin-bottom: 25px;
   border: 1.5px solid #ffffff;
