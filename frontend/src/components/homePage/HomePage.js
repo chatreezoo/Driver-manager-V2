@@ -60,7 +60,7 @@ const HomePage = () => {
         <NavButton title="จองรถ" to="/driver" icon={<FaCar />} />
         <NavButton title="อนุมัติ" to="/profile" icon={<FaCheckCircle />} />
         <NavButton title="รายการจอง" to="/bookingReport" icon={<FaClipboardList />} />
-        <NavButton title="คืนรถ" to="/returnCar" icon={<FaCar />} />
+        <NavButton title="คืนรถ" to="/carReturnForm" icon={<FaCar />} />
       </nav>
 
       <main className="dashboard-main">

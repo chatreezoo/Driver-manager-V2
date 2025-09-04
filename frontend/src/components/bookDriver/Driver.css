@@ -1,88 +1,78 @@
+:root {
+  --primary-color: #1976d2;
+  --warning-color: #ed6c02;
+  --background-color: #f0f2f5;
+  --card-background: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .Dver__page {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  text-align: center;
-  background-size: cover;
-  height: 100%;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 20px;
 }
+
 .Box {
-  background-color: rgba(214, 204, 218, 0.781);
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--card-background);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border-radius: 8px;
-  height: 90%;
-  width: 60%;
-  margin: 25px 0 0 0;
+  gap: 20px;
 }
+
 .H1 {
-  margin: 50px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
 }
+
+.P {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.date__box,
 .Text__ip {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 20px 0 0 0;
-  width: 100%;
+  gap: 20px;
 }
-.Btn__back {
-  position: absolute;
-  top: 15px;
-  left: 15px;
+
+.date__box_1,
+.time__box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 }
+
+/* เพิ่มความสวยงามให้ TextField และ Select */
+.MuiTextField-root,
+.MuiSelect-root {
+  background-color: #fafafa;
+  border-radius: var(--border-radius);
+}
+
+.MuiInputBase-input {
+  padding: 12px;
+}
+
+/* ปรับปรุงปุ่ม */
 .confirm {
   display: flex;
-  margin: 25px 0 0 0;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.T {
-  height: 350px;
-  width: 500px;
-}
-.back__01 {
-  margin: 0 0 0 20px;
-}
-.input__margin {
-  width: 60%;
-  margin: 15px 0 0 0;
-}
-.input__margin_1 {
-  width: 100%;
-}
-
-.time__box {
-  width: 100%;
-  display: flex;
-  gap: 20px;
-}
-.date__box {
-  display: flex;
-  width: 60%;
-  gap: 20px;
-}
-.date__box_1{
-  width: 100%;
-  display: flex;
-  gap: 20px;
-}
-.input__margint {
-  display: flex;
-}
-.P {
-  margin: 40px 0 0 0;
-}
-@media only screen and (max-device-width: 480px) {
-  .Box {
-    background-color: rgba(214, 204, 218, 0.781);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 8px;
-    height: 80%;
-    width: 350px;
-  }
-  .date__box {
-    display: contents;
-  }
+.back__01 a {
+  text-decoration: none;
 }

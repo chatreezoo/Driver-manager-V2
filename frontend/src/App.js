@@ -5,8 +5,9 @@ import Register from "./components/login/Register";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Profile from "./components/profile/Profile";
 import Driver from "./components/bookDriver/Driver";
-import Contact from "./components/contact/Contact";
+// import Contact from "./components/contact/Contact";
 import BookingReport from "./components/bookingReport/BookingReport";
+import CarReturnForm from "./components/carReturnForm/CarReturnForm";
 
 function App() {
   return (
@@ -30,15 +31,15 @@ function App() {
           </Route>
 
           <Route path="/driver">
-            <Driver/>
+            <Driver />
           </Route>
 
           <Route path="/bookingReport">
-          <BookingReport/>
+            <BookingReport />
           </Route>
 
-          <Route path="/Contact">
-            <Contact/>
+          <Route path="/carReturnForm">
+            <CarReturnForm />
           </Route>
 
         </Switch>

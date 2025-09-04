@@ -1,0 +1,116 @@
+.return-car-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.return-car-form .form-group {
+  margin-bottom: 20px;
+}
+
+.return-car-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.return-car-form input[type="text"],
+.return-car-form input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* ปรับแต่ง input file ให้แสดงผลดีขึ้น */
+.return-car-form input[type="file"] {
+  padding: 0;
+  border: none;
+}
+
+.return-car-form input[type="file"]::file-selector-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.return-car-form input[type="file"]::file-selector-button:hover {
+  background-color: #0056b3;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+  font-size: 14px;
+}
+
+/* เพิ่มสไตล์สำหรับข้อความแจ้งเตือน */
+.error-message {
+  color: #dc3545; /* สีแดงสำหรับข้อความแจ้งเตือน */
+  font-size: 14px;
+  margin-top: -15px; /* จัดตำแหน่งให้อยู่ใกล้กับช่อง input */
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* สไตล์สำหรับกลุ่มอัปโหลดรูปภาพ */
+.photo-upload-group {
+  border: 1px dashed #cccccc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+.image-preview-wrapper {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 200px; /* กำหนดความสูงสูงสุดของรูป */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+  object-fit: contain; /* ปรับขนาดรูปให้พอดีโดยไม่ตัดส่วน */
+}
+
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* เพิ่มระยะห่างด้านบน */
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}

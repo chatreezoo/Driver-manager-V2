@@ -1,10 +1,181 @@
-import React from 'react'
+import React, { useState } from 'react';
+import './CarReturnForm.css'; // นำเข้าไฟล์ CSS
 
+// สมมติว่ามีเลขไมล์ตอนยืมรถเก็บไว้ในระบบ
+// ในการใช้งานจริง คุณจะดึงค่านี้มาจากฐานข้อมูล เช่น จาก API
+const initialMileage = 1000; // ตัวอย่างเลขไมล์ตอนยืมรถ
 
-function carReturnForm() {
+const CarReturnForm = () => {
+  // สร้าง state เพื่อเก็บข้อมูลจากฟอร์ม
+  const [returnDetails, setReturnDetails] = useState({
+    mileage: '',
+    returnerName: '',
+    carPhoto1: null, // รูปภาพที่ 1
+    carPhoto2: null, // รูปภาพที่ 2
+  });
+  
+  // สร้าง state สำหรับข้อความแจ้งเตือนข้อผิดพลาด
+  const [error, setError] = useState('');
+
+  // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงข้อมูลในช่อง input
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setError(''); // เคลียร์ error เมื่อผู้ใช้เริ่มกรอกใหม่
+
+    if (name.startsWith('carPhoto')) { // ตรวจสอบว่าเป็นการอัปโหลดรูปภาพ
+      setReturnDetails({
+        ...returnDetails,
+        [name]: files[0], // เก็บไฟล์รูปภาพที่เลือก
+      });
+    } else {
+      setReturnDetails({
+        ...returnDetails,
+        [name]: value,
+      });
+    }
+  };
+
+  // ฟังก์ชันสำหรับจัดการเมื่อกดปุ่ม "ยืนยันการคืนรถ"
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 1. ตรวจสอบเงื่อนไขการกรอกเลขไมล์
+    const mileage = parseInt(returnDetails.mileage, 10);
+    
+    if (isNaN(mileage)) {
+        setError('กรุณากรอกเลขไมล์กลับเป็นตัวเลขเท่านั้น');
+        return;
+    }
+    
+    if (mileage < initialMileage) {
+        setError(`เลขไมล์กลับ (ปัจจุบัน ${mileage}) ต้องมากกว่าเลขไมล์ตอนยืม (${initialMileage})`);
+        return;
+    }
+
+    // 2. ตรวจสอบเงื่อนไขการอัปโหลดรูปภาพ
+    if (!returnDetails.carPhoto1 || !returnDetails.carPhoto2) {
+        setError('กรุณาอัปโหลดรูปภาพรถให้ครบทั้ง 2 ภาพ');
+        return;
+    }
+
+    // ถ้าผ่านเงื่อนไขทั้งหมด
+    console.log('ข้อมูลการคืนรถ:', returnDetails);
+    console.log('ข้อมูลที่ผ่านการตรวจสอบแล้ว:', {
+        ...returnDetails,
+        mileage: mileage,
+        carPhoto1: returnDetails.carPhoto1 ? returnDetails.carPhoto1.name : null,
+        carPhoto2: returnDetails.carPhoto2 ? returnDetails.carPhoto2.name : null,
+    });
+
+    // คุณสามารถเพิ่มโค้ดเพื่อส่งข้อมูลนี้ไปยัง API หรือฐานข้อมูลได้ที่นี่
+    // สำหรับการส่งรูปภาพผ่าน API มักจะใช้ FormData
+    // ตัวอย่าง:
+    // const formData = new FormData();
+    // formData.append('mileage', mileage);
+    // formData.append('returnerName', returnDetails.returnerName);
+    // if (returnDetails.carPhoto1) formData.append('carPhoto1', returnDetails.carPhoto1);
+    // if (returnDetails.carPhoto2) formData.append('carPhoto2', returnDetails.carPhoto2);
+    // axios.post('/api/return-car', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // });
+
+    alert('บันทึกข้อมูลการคืนรถเรียบร้อยแล้ว!');
+
+    // รีเซ็ตฟอร์มหลังจากส่งข้อมูลสำเร็จ
+    setReturnDetails({
+      mileage: '',
+      returnerName: '',
+      carPhoto1: null,
+      carPhoto2: null,
+    });
+  };
+
   return (
-    <div>eshrtjhtd</div>
-  )
-}
+    <div className="return-car-container">
+      <h2 className="form-title">แบบฟอร์มคืนรถ</h2>
+      <form onSubmit={handleSubmit} className="return-car-form">
+        <div className="form-group">
+          <label htmlFor="mileage">เลขไมล์กลับ:</label>
+          <input
+            type="number"
+            id="mileage"
+            name="mileage"
+            value={returnDetails.mileage}
+            onChange={handleChange}
+            required
+            placeholder="กรอกเลขไมล์ล่าสุด"
+          />
+        </div>
+        
+        {error && <p className="error-message">{error}</p>}
 
-export default carReturnForm;
+        <div className="form-group">
+          <label htmlFor="returnerName">ชื่อผู้คืน:</label>
+          <input
+            type="text"
+            id="returnerName"
+            name="returnerName"
+            value={returnDetails.returnerName}
+            onChange={handleChange}
+            required
+            placeholder="ชื่อ-นามสกุล ผู้คืนรถ"
+          />
+        </div>
+
+        {/* ช่องอัปโหลดรูปภาพที่ 1 */}
+        <div className="form-group photo-upload-group">
+          <label htmlFor="carPhoto1">อัปโหลดรูปภาพรถก่อนไป:</label>
+          <input
+            type="file"
+            id="carPhoto1"
+            name="carPhoto1"
+            accept="image/*"
+            onChange={handleChange}
+            required
+          />
+          {returnDetails.carPhoto1 && (
+            <div className="image-preview-wrapper">
+              <p className="file-name">ไฟล์ที่เลือก: {returnDetails.carPhoto1.name}</p>
+              <img 
+                src={URL.createObjectURL(returnDetails.carPhoto1)} 
+                alt="Car Preview 1" 
+                className="image-preview" 
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ช่องอัปโหลดรูปภาพที่ 2 */}
+        <div className="form-group photo-upload-group">
+          <label htmlFor="carPhoto2">อัปโหลดรูปภาพรถหลักกลับ:</label>
+          <input
+            type="file"
+            id="carPhoto2"
+            name="carPhoto2"
+            accept="image/*"
+            onChange={handleChange}
+            required
+          />
+          {returnDetails.carPhoto2 && (
+            <div className="image-preview-wrapper">
+              <p className="file-name">ไฟล์ที่เลือก: {returnDetails.carPhoto2.name}</p>
+              <img 
+                src={URL.createObjectURL(returnDetails.carPhoto2)} 
+                alt="Car Preview 2" 
+                className="image-preview" 
+              />
+            </div>
+          )}
+        </div>
+
+        <button type="submit" className="submit-button">
+          ยืนยันการคืนรถ
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default CarReturnForm;

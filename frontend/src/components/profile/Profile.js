@@ -141,14 +141,23 @@ const Profile = () => {
 
   async function loadlist() {
     const list = await axios.get("/schedule");
-    if (list?.data?.lenght <= 0) {
+    if (list?.data?.length <= 0) {
       setData([]);
       return;
     }
 
-    // const filterData = list.data.filter((item) => item.status == "รอดำเนินการ");
-    setData(list.data);
+    // Filter data to show only items with status "รอดำเนินการ"
+    const unapprovedData = list.data.filter(
+      (item) => item.status === "รอดำเนินการ"
+    );
+
+    // Sort the unapproved data by booking date
+    const sortedData = unapprovedData.sort(
+      (a, b) => new Date(a.startDate) - new Date(b.startDate)
+    );
+    setData(sortedData);
   }
+
   useEffect(() => {
     loadlist();
   }, []);
@@ -163,17 +172,10 @@ const Profile = () => {
 
   return (
     <div className="profile__page">
-      <Link to="/">
-        <div className="Btn__back">
-          <Button variant="contained" startIcon={<ArrowBackIosIcon />}>
-            ย้อนกลับ
-          </Button>
-        </div>
-      </Link>
       {isAdmin === false ? (
         <div className="Box__Admin">
           <div className="Login">
-            <h1>กรุณากรอกรหัส</h1>
+            <h1>กรุณากรอกข้อมูลผู้ใช้</h1>
             <div className="Cl">
               <TextField
                 label="username"
@@ -207,139 +209,97 @@ const Profile = () => {
         </div>
       ) : (
         <div className="BOX__Book">
-          <div className="BOX">
-            <div className="table__right">
+            <div className="BOX">
               <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                   <TableHead>
                     <TableRow>
-                      <StyledTableCell align="right">
-                        วันที่บันทึกการจอง
-                      </StyledTableCell>
+                      <StyledTableCell align="right">ลำดับ</StyledTableCell>{" "}
+                      {/* Added "ลำดับ" column */}
                       <StyledTableCell align="right">
                         วันที่ใช้งาน
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        เวลาเรื่มใช้งาน
+                        เวลาเริ่มใช้งาน
                       </StyledTableCell>
-                      <StyledTableCell align="right">เวลาคืนรถ</StyledTableCell>
                       <StyledTableCell align="right">
                         รถ-ทะเบียน
                       </StyledTableCell>
                       <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
                       <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
+                      <StyledTableCell align="right">
+                        จำนวนผู้โดยสาร
+                      </StyledTableCell>
                       <StyledTableCell align="right">แผนก</StyledTableCell>
-                      <StyledTableCell align="right">
-                        วัดถุประสงค์ที่ใช้รถ
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        สถานที่ปลายทาง
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        สถานะคำร้อง
-                      </StyledTableCell>
                       <StyledTableCell align="right">
                         ผู้อนุมัติ
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         ปฏิเสธคำขอ
                       </StyledTableCell>
-                      <StyledTableCell align="right">หมายเหตุ</StyledTableCell>
-                      <StyledTableCell align="right">
-                        สถานะคืนรถ
-                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {data.map((item) => (
-                      <>
-                        <StyledTableRow key={item.id}>
-                          <StyledTableCell component="th" scope="row">
-                            {dayjs(item.startDate).format("DD-MM-YYYY")}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {dayjs(item.endDate).format("DD-MM-YYYY")}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.startTime}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.endTime}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.cars}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.driver}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.name}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.department}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.objective}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.place}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {item.status}
-                          </StyledTableCell>
-                          <StyledTableCell align="center">
-                            <Button
-                              disabled={
-                                item.status === "รอดำเนินการ" ? false : true
-                              }
-                              variant="contained"
-                              startIcon={<ContentPasteIcon />}
-                              color="primary"
-                              onClick={() => handleClickOpen(item)}
-                            >
-                              ลงชื่อผู้อนุมัติ
-                            </Button>
-                          </StyledTableCell>
-                          <StyledTableCell align="center">
-                            <Button
-                              disabled={
-                                item.status === "รอดำเนินการ" ? false : true
-                              }
-                              variant="contained"
-                              startIcon={<DeleteIcon />}
-                              color="warning"
-                              onClick={() => handleRejectDialogOpen(item)}
-                            >
-                              ปฏิเสธ
-                            </Button>
-                          </StyledTableCell>
-                          <StyledTableCell align="center">
-                            {item.reason ? item.reason : "-"}
-                          </StyledTableCell>
-                          <StyledTableCell align="center">
-                            <Button
-                              disabled={
-                                item.is_return_car === 1 ||
-                                item.status === "รอดำเนินการ"
-                                  ? true
-                                  : false
-                              }
-                              variant="contained"
-                              startIcon={<AssignmentTurnedInIcon />}
-                              color="success"
-                              onClick={() => returncar(item)}
-                            >
-                              คืนรถ
-                            </Button>
-                          </StyledTableCell>
-                        </StyledTableRow>
-                      </>
+                    {data.map((item, index) => (
+                      <StyledTableRow key={item.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {index + 1}
+                        </StyledTableCell>{" "}
+                        {/* Added row number */}
+                        <StyledTableCell align="right">
+                          {dayjs(item.endDate).format("DD-MM-YYYY")}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.startTime}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.cars}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.driver}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.passengerCount}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {item.department}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Button
+                            disabled={
+                              item.status === "รอดำเนินการ" ? false : true
+                            }
+                            variant="contained"
+                            startIcon={<ContentPasteIcon />}
+                            color="primary"
+                            onClick={() => handleClickOpen(item)}
+                          >
+                            ลงชื่อผู้อนุมัติ
+                          </Button>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Button
+                            disabled={
+                              item.status === "รอดำเนินการ" ? false : true
+                            }
+                            variant="contained"
+                            startIcon={<DeleteIcon />}
+                            color="warning"
+                            onClick={() => handleRejectDialogOpen(item)}
+                          >
+                            ปฏิเสธ
+                          </Button>
+                        </StyledTableCell>
+                      </StyledTableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </div>
-          </div>
+          
         </div>
       )}
       <Dialog

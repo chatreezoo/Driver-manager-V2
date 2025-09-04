@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SaveSharpIcon from "@mui/icons-material/SaveSharp";
-// import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Button from "@mui/material/Button";
 import "./Driver.css";
 import axios from "../../axios";
@@ -10,6 +9,7 @@ import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
+
 const Driver = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -22,6 +22,7 @@ const Driver = () => {
   const [objective, setObjective] = useState("");
   const [place, setPlace] = useState("");
   const [enddate, setEnddate] = useState("");
+  const [passengers, setPassengers] = useState("");
   const history = useHistory();
   const [carList, setCarList] = useState([]);
 
@@ -49,17 +50,11 @@ const Driver = () => {
     if (!time) {
       return true;
     }
-    // Create two Date objects for comparison
-    const startTime = new Date(); // Replace with your start time
-    const endTime = new Date(time); // Replace with your end time
-
-    // Calculate the time difference in milliseconds
-    const timeDiff =  Math.abs(endTime - startTime);
-
-    // Convert milliseconds to hours
+    const startTime = new Date();
+    const endTime = new Date(time);
+    const timeDiff = Math.abs(endTime - startTime);
     const hoursDiff = timeDiff / (1000 * 60 * 60);
 
-    // Check if the time difference is more than 1 hour
     console.log("The time difference is not more than 1 hour.");
     if (hoursDiff > 1) {
       return true;
@@ -71,20 +66,9 @@ const Driver = () => {
   function handleClick() {
     history.push("/bookingReport");
   }
+
   function submit() {
-    const post = {
-      date: date,
-      cars: cars,
-      driver: driver,
-      endDate: enddate,
-      name: name,
-      department: depart,
-      objective: objective,
-      startTime: startTime,
-      endTime: endTime,
-      place: place,
-    };
-    console.log(post,"body")
+    // Check for empty fields first
     if (
       !(
         date &&
@@ -96,29 +80,66 @@ const Driver = () => {
         enddate &&
         cars &&
         place &&
-        driver
+        driver &&
+        passengers
       )
     ) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    } else {
-      axios
-        .post("/schedule", post)
-        .then(() => {
-          handleClick();
-        })
-        .catch((err) => console.log(err));
-
-      setDate("");
-      setDepart("");
-      setName("");
-      setObjective("");
-      setPlace("");
-      setStartTime("");
-      setType("");
-      setEndTime("");
-      console.log(post);
+      return;
     }
+
+    // New validation for number of passengers
+    if (isNaN(Number(passengers))) {
+        alert("จำนวนผู้โดยสารต้องเป็นตัวเลขเท่านั้น");
+        return;
+    }
+
+    const post = {
+      date: date,
+      cars: cars,
+      driver: driver,
+      endDate: enddate,
+      name: name,
+      department: depart,
+      objective: objective,
+      startTime: startTime,
+      endTime: endTime,
+      place: place,
+      passengers: passengers,
+    };
+
+    const now = new Date();
+    const startDateTime = new Date(`${date}T${startTime}:00`);
+    const endDateTime = new Date(`${enddate}T${endTime}:00`);
+
+    if (startDateTime < now) {
+      alert("กรุณากรอกวันที่และเวลาเริ่มต้นให้ถูกต้อง (ห้ามย้อนหลัง)");
+      return;
+    }
+
+    if (endDateTime < startDateTime) {
+      alert("กรุณากรอกวันที่และเวลาสิ้นสุดให้ถูกต้อง (ต้องไม่ย้อนหลังกว่าเวลาเริ่มต้น)");
+      return;
+    }
+
+    axios
+      .post("/schedule", post)
+      .then(() => {
+        handleClick();
+      })
+      .catch((err) => console.log(err));
+
+    setDate("");
+    setDepart("");
+    setName("");
+    setObjective("");
+    setPlace("");
+    setStartTime("");
+    setType("");
+    setEndTime("");
+    setPassengers("");
   }
+
   return (
     <div className="Dver__page">
       <div className="Box">
@@ -146,17 +167,10 @@ const Driver = () => {
                 />
               </div>
             </div>
-
             <p className="P">รถ-ทะเบียน</p>
-            <Select
-              fullWidth
-              value={cars}
-              onChange={(e) => setCars(e.target.value)}
-            >
+            <Select fullWidth value={cars} onChange={(e) => setCars(e.target.value)}>
               {carList.map((caritem) => (
-                <MenuItem
-                  value={caritem.plate}
-                >{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
+                <MenuItem key={caritem.plate} value={caritem.plate}>{`${caritem.type} ทะเบียน : ${caritem.plate} `}</MenuItem>
               ))}
             </Select>
           </div>
@@ -183,20 +197,13 @@ const Driver = () => {
               </div>
             </div>
             <p className="P">ผู้ขับรถ</p>
-            <Select
-              labelId="L1"
-              id="L1"
-              fullWidth
-              value={driver}
-              onChange={(e) => setDriver(e.target.value)}
-            >
+            <Select labelId="L1" id="L1" fullWidth value={driver} onChange={(e) => setDriver(e.target.value)}>
               {departmentList.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
+                <MenuItem key={item} value={item}>{item}</MenuItem>
               ))}
             </Select>
           </div>
         </div>
-
         <div className="Text__ip">
           <div className="input__margin">
             <TextField
@@ -216,7 +223,16 @@ const Driver = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
+          <div className="input__margin">
+            <TextField
+              label="จำนวนผู้โดยสาร"
+              type="number"
+              color="primary"
+              fullWidth
+              value={passengers}
+              onChange={(e) => setPassengers(e.target.value)}
+            />
+          </div>
           <div className="input__margin">
             <TextField
               label="สถานที่"
@@ -229,7 +245,7 @@ const Driver = () => {
           </div>
           <div className="input__margin">
             <TextField
-              label="วัดถุประสงค์ในการใช้รถ"
+              label="วัตถุประสงค์ในการใช้รถ"
               multiline
               fullWidth
               rows={2}
@@ -238,37 +254,19 @@ const Driver = () => {
             />
           </div>
         </div>
-
         <div className="confirm">
-          <Button
-            variant="contained"
-            startIcon={<SaveSharpIcon />}
-            onClick={submit}
-          >
+          <Button variant="contained" startIcon={<SaveSharpIcon />} onClick={submit}>
             ตกลง
           </Button>
-
           <div className="back__01">
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Button
-                variant="contained"
-                startIcon={<CloseTwoToneIcon />}
-                color="warning"
-              >
+              <Button variant="contained" startIcon={<CloseTwoToneIcon />} color="warning">
                 ยกเลิก
               </Button>
             </Link>
           </div>
         </div>
       </div>
-
-      {/* <Link to="/">
-        <div className="Btn__back">
-          <Button variant="contained" startIcon={<ArrowBackIosIcon />}>
-            ย้อนกลับ
-          </Button>
-        </div>
-      </Link> */}
     </div>
   );
 };
