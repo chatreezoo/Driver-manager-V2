@@ -1,64 +1,100 @@
 import React from "react";
-import BoxPage from "./BoxPage";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
+import { FaCar, FaCheckCircle, FaClipboardList, FaSpinner } from 'react-icons/fa'; // Icons from react-icons
 
-const data = [
-  ["สถิติ", "เดือนที่แล้ว","เดือนล่าสุด"],
+// ข้อมูลสำหรับกราฟ
+const chartData = [
+  ["สายงาน", "เดือนที่แล้ว", "เดือนล่าสุด"],
   ["สายงานภัยพิบัติ", 30, 25],
   ["สายงานบริหารสำนักงาน", 10, 8],
   ["สายงานสำนักผู้จัดการ", 20, 12],
-  ["สายการพัฒนาความยั่งยืน", 85, 35],
-  ["ร้านค้า", 100, 25],
+  ["สายการพัฒนาความยั่งยืน", 55, 35],
+  ["ร้านค้า", 10, 25],
 ];
 
-const options = {
+// Options สำหรับกราฟ
+const chartOptions = {
   title: "สถิติรายการจองของแต่ละสายงาน",
-  titleTextStyle: { fontSize: 28 },
+  titleTextStyle: { fontSize: 24, fontWeight: "bold" },
   legend: { textStyle: { fontSize: 14 } },
-  chartArea: { width: " 65%" },
-  vAxis: { textStyle: { fontSize: 18 } },
-  colors: ['#CC00FF','#FF6633']
+  chartArea: { width: "70%" },
+  vAxis: { textStyle: { fontSize: 16 } },
+  hAxis: { textStyle: { fontSize: 14 } },
+  colors: ['#007bff', '#28a745'],
+  bar: { groupWidth: '80%' }
+};
+
+// Component สำหรับ Summary Card (ตัวแสดงผลรวม)
+const SummaryCard = ({ title, value, icon, className }) => {
+  return (
+    <div className={`summary-card ${className}`}>
+      <div className="card-icon">{icon}</div>
+      <div className="card-content">
+        <h3 className="card-title">{title}</h3>
+        <p className="card-value">{value}</p>
+      </div>
+    </div>
+  );
+};
+
+// Component สำหรับ Navigation Button
+const NavButton = ({ title, to, icon }) => {
+  return (
+    <Link to={to} className="nav-button">
+      <div className="button-icon">{icon}</div>
+      <span className="button-text">{title}</span>
+    </Link>
+  );
 };
 
 const HomePage = () => {
   return (
-    <div className="home__page">
-      <h1 className="H1">ระบบจองรถสำนักงาน</h1>
-      {/* <div className="roporttest" >dki</div> */}
-      <div className="container__home">
-        <div className="p">
-          <div className="box__top">
-            <Link to="/driver" style={{ textDecoration: "none" }}>
-              <BoxPage title="จองรถ" />
-            </Link>
-            <Link to="/profile" style={{ textDecoration: "none" }}>
-              <BoxPage title="อนุมัติ" />
-            </Link>
-            <Link to="/bookingReport" style={{ textDecoration: "none" }}>
-              <BoxPage title="รายการจอง" />
-            </Link>
-            <Link to="/bookingReport" style={{ textDecoration: "none" }}>
-              <BoxPage title="คืนรถ" />
-            </Link>
-            <Link to="/Contact" style={{ textDecoration: "none" }}>
-              <BoxPage title="ติดต่อเรา" />
-            </Link>
-          </div>
-          <div>
-          <Chart
-            // Bar is the equivalent chart type for the material design version.
-            chartType="BarChart"
-            width="900px"
-            height="100%"
-            data={data}
-            options={options}
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h1 className="header-title">ระบบจองรถสำนักงาน</h1>
+      </header>
+
+      <nav className="dashboard-nav">
+        <NavButton title="จองรถ" to="/driver" icon={<FaCar />} />
+        <NavButton title="อนุมัติ" to="/profile" icon={<FaCheckCircle />} />
+        <NavButton title="รายการจอง" to="/bookingReport" icon={<FaClipboardList />} />
+        <NavButton title="คืนรถ" to="/returnCar" icon={<FaCar />} />
+      </nav>
+
+      <main className="dashboard-main">
+        <div className="summary-cards-section">
+          <SummaryCard 
+            title="จำนวนรถที่ว่าง" 
+            value="5 คัน" 
+            icon={<FaCar size={40} />} 
+            className="card-available" 
           />
-          </div>
-          
+          <SummaryCard 
+            title="การจองทั้งหมด" 
+            value="50 ครั้ง" 
+            icon={<FaClipboardList size={40} />} 
+            className="card-total" 
+          />
+          <SummaryCard 
+            title="รออนุมัติ" 
+            value="1 รายการ" 
+            icon={<FaSpinner size={40} />} 
+            className="card-pending" 
+          />
         </div>
-      </div>
+
+        <div className="charts-section">
+          <Chart
+            chartType="BarChart"
+            width="100%"
+            height="400px"
+            data={chartData}
+            options={chartOptions}
+          />
+        </div>
+      </main>
     </div>
   );
 };
