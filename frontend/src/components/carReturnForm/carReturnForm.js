@@ -94,7 +94,13 @@ const CarReturnForm = () => {
       carPhoto2: returnDetails.carPhoto2 ? returnDetails.carPhoto2.name : null,
     });
 
-    alert("บันทึกข้อมูลการคืนรถเรียบร้อยแล้ว!");
+    const body = {
+      cars: data,
+      endmileage:endmileage,
+      name: name
+    }
+
+    console.log(body,"111")
 
     // รีเซ็ตฟอร์มหลังจากส่งข้อมูลสำเร็จ
     setReturnDetails({

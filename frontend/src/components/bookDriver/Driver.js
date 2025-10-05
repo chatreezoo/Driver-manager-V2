@@ -119,6 +119,7 @@ const Driver = () => {
   }
 
   function handleConfirmAndSubmit() {
+    //ส่วนปั่นข้อมูล
     const post = {
       date: date,
       cars: cars,
@@ -132,7 +133,7 @@ const Driver = () => {
       place: place,
       passengers: passengers,
     };
-
+    //ส่วนนี้ส่งข้อมูลไปยังแบ็กเอ็น
     axios
       .post("/schedule", post)
       .then(() => {
