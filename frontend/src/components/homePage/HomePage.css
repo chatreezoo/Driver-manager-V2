@@ -122,6 +122,7 @@ body {
 
 .card-pending {
   border-left: 6px solid #ffc107;
+  cursor: pointer;
 }
 
 .card-pending .card-icon {
