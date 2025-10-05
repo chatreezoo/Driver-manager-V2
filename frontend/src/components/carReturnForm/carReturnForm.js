@@ -97,10 +97,11 @@ const CarReturnForm = () => {
     const body = {
       id: data.id,
       endmileage:endmileage,
-      name: name
+      name: name,
+      startMileage:data.startMileage
     }
     axios
-      .post("/schedule/mile",body)
+      .put(`/schedule/mile/${data.id}`,body)
       .then(() => {
         alert("บันทึกข้อมูลสำเร็จ")
       })

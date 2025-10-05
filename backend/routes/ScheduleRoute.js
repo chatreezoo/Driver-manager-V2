@@ -148,6 +148,27 @@ console.log(driver_name,"driver_name")
   
 });
 
+router.put("/mile/:id", (req, res) => {
+  const endmileage = req?.body?.endmileage;
+  const name = req?.body?.name;
+
+let sql= ""
+
+  sql = `UPDATE schedule SET startMileage = ?, driver_name = ? WHERE id =?`;  
+  con.query(sql, [endmileage, name,req.params.id], function(err, result) {
+    if (err) {
+      
+      console.log(err,"xxxx");
+      
+      res.send(err);
+      return;
+    }
+    res.send(result);
+  });
+  
+});
+
+
 router.get("/:id", (req, res) => {
   scheduleModel
     .findById(req.params.id)

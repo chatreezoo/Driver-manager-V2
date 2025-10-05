@@ -16,7 +16,10 @@ const ScheduleSchema = new Schema({
     status: {type:String, require:false},
     approve: {type:String, require:false},
     reason: {type:String, require:false},
-    passengers: {type:String, require:false}
+    passengers: {type:String, require:false},
+    startMileage: {type:String, require:false},
+    endMileage: {type:String, require:false}
+    
     
     
 })
