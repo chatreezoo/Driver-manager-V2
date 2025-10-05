@@ -99,6 +99,12 @@ const CarReturnForm = () => {
       endmileage:endmileage,
       name: name
     }
+    axios
+      .post("/schedule/mile",body)
+      .then(() => {
+        alert("บันทึกข้อมูลสำเร็จ")
+      })
+      .catch((err) => console.log(err));
 
     console.log(body,"111")
 
