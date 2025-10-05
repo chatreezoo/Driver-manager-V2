@@ -154,7 +154,7 @@ console.log(data)
                     </StyledTableCell>
                     <StyledTableCell align="right">{item.name}</StyledTableCell>
                     <StyledTableCell align="right">
-                      {item.passenger_count ? item.passenger_count : "-"}
+                      {item.passengers ? item.passengers: "-"}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {item.department}
