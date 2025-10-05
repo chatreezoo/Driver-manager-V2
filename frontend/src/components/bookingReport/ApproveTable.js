@@ -57,10 +57,14 @@ const ApproveTable = () => {
         const sortedData = res.data.sort(
           (a, b) => new Date(a.startDate) - new Date(b.startDate)
         );
-        setData(sortedData);
+        const filteredData = sortedData.filter(item => item.status ==="อนุมัติคำร้อง")
+        console.log(sortedData)
+        setData(filteredData);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -88,7 +92,7 @@ const ApproveTable = () => {
   return (
     <div className="background___page">
       <div className="header__container">
-        <h1>รายงานการจองรถ</h1>
+        <h1>รายการที่ได้รับอนุมัติแล้ว</h1>
         <div className="search__container">
           <select value={filterBy} onChange={handleFilterChange} className="filter__select">
             <option value="name">ผู้จอง</option>
