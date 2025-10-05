@@ -61,6 +61,7 @@ const BookingReport = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+console.log(data)
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -167,10 +168,10 @@ const BookingReport = () => {
                       {item.approve ? item.approve : "-"}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {item.milage_before ? item.milage_before : "-"}
+                      {item.startMileage ? item.startMileage : "-"}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {item.milage_after ? item.milage_after : "-"}
+                      {item.endMileage ? item.endMileage : "-"}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {item.note ? item.note : "-"}

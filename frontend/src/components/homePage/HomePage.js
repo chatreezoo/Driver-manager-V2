@@ -34,8 +34,7 @@ const NavButton = ({ title, to, icon }) => {
 
 const HomePage = () => {
   const [data, setData] = useState([]);
-  console.log(data, "5555");
-
+  
   useEffect(() => {
     axios
       .get("cars")
