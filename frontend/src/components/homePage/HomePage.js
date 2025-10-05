@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
@@ -8,6 +8,7 @@ import {
   FaClipboardList,
   FaSpinner,
 } from "react-icons/fa";
+import axios from "../../axios";
 
 // ข้อมูลสำหรับกราฟ
 const chartData = [
@@ -60,8 +61,23 @@ const HomePage = () => {
     { id: 2, brand: "Toyota", model: "Commuter", license: "งจ 5678" },
     { id: 3, brand: "Isuzu", model: "D-Max", license: "ชฎ 9012" },
   ];
+  const [data, setData] = useState([]);
+console.log(data,"5555")
 
-  // **New dynamic data for pending requests**
+  useEffect(() => {
+    axios
+      .get("schedule")
+      .then((res) => {
+        const sortedData = res.data.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        );
+        const filteredData = sortedData.filter(item => item.status ==="อนุมัติคำร้อง")
+        console.log(sortedData)
+        setData(filteredData);
+      })
+      .catch((err) => console.log(err,"555555"));
+  }, []);
+
   const pendingRequestsDetails = [
     {
       id: 1,
@@ -99,11 +115,11 @@ const HomePage = () => {
       <main className="dashboard-main">
         <div className="summary-cards-section">
           <SummaryCard
-            title={`รถที่ว่าง (${availableCarDetails.length} คัน)`}
+            title={`รถที่ว่าง (${data.length} คัน)`}
             icon={<FaCar size={40} />}
             className="card-available"
           >
-            {availableCarDetails.length > 0 ? (
+            {data.length > 0 ? (
               <table className="car-table">
                 <thead>
                   <tr>
@@ -113,7 +129,7 @@ const HomePage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {availableCarDetails.map((car) => (
+                  {data.map((car) => (
                     <tr key={car.id}>
                       <td>{car.brand}</td>
                       <td>{car.model}</td>
