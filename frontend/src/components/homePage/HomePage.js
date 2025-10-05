@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
-import { Chart } from "react-google-charts";
 import {
   FaCar,
   FaCheckCircle,
@@ -9,28 +8,6 @@ import {
   FaSpinner,
 } from "react-icons/fa";
 import axios from "../../axios";
-
-// ข้อมูลสำหรับกราฟ
-const chartData = [
-  ["สายงาน", "เดือนที่แล้ว", "เดือนล่าสุด"],
-  ["สายงานภัยพิบัติ", 30, 25],
-  ["สายงานบริหารสำนักงาน", 10, 8],
-  ["สายงานสำนักผู้จัดการ", 20, 12],
-  ["สายการพัฒนาความยั่งยืน", 55, 35],
-  ["ร้านค้า", 10, 25],
-];
-
-// Options สำหรับกราฟ
-const chartOptions = {
-  title: "สถิติรายการจองของแต่ละสายงาน",
-  titleTextStyle: { fontSize: 18, fontWeight: "bold" },
-  legend: { textStyle: { fontSize: 12 } },
-  chartArea: { width: "85%" },
-  vAxis: { textStyle: { fontSize: 10 } },
-  hAxis: { textStyle: { fontSize: 12 } },
-  colors: ["#007bff", "#28a745"],
-  bar: { groupWidth: "80%" },
-};
 
 // Component สำหรับ Summary Card
 const SummaryCard = ({ title, icon, className, children }) => {
@@ -57,7 +34,7 @@ const NavButton = ({ title, to, icon }) => {
 
 const HomePage = () => {
   const [data, setData] = useState([]);
-console.log(data,"5555")
+  console.log(data, "5555");
 
   useEffect(() => {
     axios
@@ -66,11 +43,13 @@ console.log(data,"5555")
         const sortedData = res.data.sort(
           (a, b) => new Date(a.startDate) - new Date(b.startDate)
         );
-        const filteredData = sortedData.filter(item => item.status ==="ว่าง")
-        console.log(sortedData)
+        const filteredData = sortedData.filter(
+          (item) => item.status === "ว่าง"
+        );
+        console.log(sortedData);
         setData(filteredData);
       })
-      .catch((err) => console.log(err,"555555"));
+      .catch((err) => console.log(err, "555555"));
   }, []);
 
   const pendingRequestsDetails = [
@@ -173,20 +152,6 @@ console.log(data,"5555")
               )}
             </SummaryCard>
           </Link>
-
-          <SummaryCard
-            title="การจองทั้งหมด"
-            icon={<FaClipboardList size={60} />}
-            className="card-total chart-card"
-          >
-            <div className="chart-container">
-              <Chart
-                chartType="BarChart"
-                data={chartData}
-                options={chartOptions}
-              />
-            </div>
-          </SummaryCard>
         </div>
       </main>
     </div>
