@@ -95,7 +95,7 @@ const CarReturnForm = () => {
     });
 
     const body = {
-      cars: data,
+      id: data.id,
       endmileage:endmileage,
       name: name
     }
@@ -119,7 +119,7 @@ const CarReturnForm = () => {
     setEndMileage("");
     setData("")
   };
-
+console.log(data,"xx")
   return (
     <div className="return-car-container">
       <h2 className="form-title">แบบฟอร์มคืนรถ</h2>
