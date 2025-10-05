@@ -41,28 +41,35 @@ td {
   opacity: 0.8;
 }
 .Login {
-  margin: 10% 0 0 0;
+  
   align-items: center;
   text-align: center;
 }
-.Box__Admin{
-  background-color: rgba(215, 243, 250, 0.781);
+.Box__Admin {
+  background-color: rgba(245, 245, 245, 0.781);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 8px;
-  height: 50%;
+  height: 40%;
   width: 50%;
-  margin: 5% 0 0 0; 
+  margin: 5% 0 0 0;
+  border: 1px solid rgba(105, 104, 104, 0.2); /* เพิ่มเส้นขอบสีเทาจางๆ */
+  border-radius: 12px; /* ทำให้มุมขอบโค้งมน */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ดูมีมิติ */
 }
 .BOX {
   max-width: 95%;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(199, 61, 61, 0.1);
+  box-shadow: 0 4px 20px rgba(215, 243, 250, 0.781);
   border-radius: 8px;
-  overflow-x: auto; /* Enable horizontal scrolling for the table */
+  overflow-x: auto; 
   overflow-y: hidden;
- 
+}
+.header__container h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #2c3e50;
+  margin: 0;
 }
 
 .Cl{

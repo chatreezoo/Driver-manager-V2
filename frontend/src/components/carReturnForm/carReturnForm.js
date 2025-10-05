@@ -97,12 +97,24 @@ const CarReturnForm = () => {
       <h2 className="form-title">แบบฟอร์มคืนรถ</h2>
       <form onSubmit={handleSubmit} className="return-car-form">
         <div className="form-group">
+          <label htmlFor="mileage">เลขไมล์ไป:</label>
+          <input
+            type="number"
+            id="mileage"
+            name="mileage"
+            value={returnDetails.startmileage}
+            onChange={handleChange}
+            required
+            placeholder="กรอกเลขไมล์ล่าสุด"
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="mileage">เลขไมล์กลับ:</label>
           <input
             type="number"
             id="mileage"
             name="mileage"
-            value={returnDetails.mileage}
+            value={returnDetails.endmileage}
             onChange={handleChange}
             required
             placeholder="กรอกเลขไมล์ล่าสุด"

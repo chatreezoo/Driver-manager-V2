@@ -9,12 +9,16 @@ import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Driver = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [cars, setCars] = useState("");
-  const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [depart, setDepart] = useState("");
   const [name, setName] = useState("");
@@ -25,6 +29,7 @@ const Driver = () => {
   const [passengers, setPassengers] = useState("");
   const history = useHistory();
   const [carList, setCarList] = useState([]);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   const departmentList = ["เลือกคนขับ", "ขับเอง"];
 
@@ -67,8 +72,7 @@ const Driver = () => {
     history.push("/bookingReport");
   }
 
-  function submit() {
-    // Check for empty fields first
+  function handleOpenConfirm() {
     if (
       !(
         date &&
@@ -88,25 +92,10 @@ const Driver = () => {
       return;
     }
 
-    // New validation for number of passengers
     if (isNaN(Number(passengers))) {
-        alert("จำนวนผู้โดยสารต้องเป็นตัวเลขเท่านั้น");
-        return;
+      alert("จำนวนผู้โดยสารต้องเป็นตัวเลขเท่านั้น");
+      return;
     }
-
-    const post = {
-      date: date,
-      cars: cars,
-      driver: driver,
-      endDate: enddate,
-      name: name,
-      department: depart,
-      objective: objective,
-      startTime: startTime,
-      endTime: endTime,
-      place: place,
-      passengers: passengers,
-    };
 
     const now = new Date();
     const startDateTime = new Date(`${date}T${startTime}:00`);
@@ -122,10 +111,33 @@ const Driver = () => {
       return;
     }
 
+    setOpenConfirm(true);
+  }
+
+  function handleCloseConfirm() {
+    setOpenConfirm(false);
+  }
+
+  function handleConfirmAndSubmit() {
+    const post = {
+      date: date,
+      cars: cars,
+      driver: driver,
+      endDate: enddate,
+      name: name,
+      department: depart,
+      objective: objective,
+      startTime: startTime,
+      endTime: endTime,
+      place: place,
+      passengers: passengers,
+    };
+
     axios
       .post("/schedule", post)
       .then(() => {
         handleClick();
+        handleCloseConfirm();
       })
       .catch((err) => console.log(err));
 
@@ -135,7 +147,6 @@ const Driver = () => {
     setObjective("");
     setPlace("");
     setStartTime("");
-    setType("");
     setEndTime("");
     setPassengers("");
   }
@@ -255,7 +266,7 @@ const Driver = () => {
           </div>
         </div>
         <div className="confirm">
-          <Button variant="contained" startIcon={<SaveSharpIcon />} onClick={submit}>
+          <Button variant="contained" startIcon={<SaveSharpIcon />} onClick={handleOpenConfirm}>
             ตกลง
           </Button>
           <div className="back__01">
@@ -267,6 +278,41 @@ const Driver = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={openConfirm} onClose={handleCloseConfirm}>
+        <DialogTitle>{"ยืนยันข้อมูลการจอง"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            **กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนยืนยัน:**
+            <br />
+            <br />
+            วันที่:  {date} ถึง {enddate}
+            <br />
+            เวลา:  {startTime} ถึง {endTime}
+            <br />
+            รถ-ทะเบียน:  {cars}
+            <br />
+            ผู้ขับรถ:  {driver}
+            <br />
+            ผู้จอง: {name} ({depart})
+            <br />
+            จำนวนผู้โดยสาร:  {passengers}
+            <br />
+            สถานที่:  {place}
+            <br />
+            วัตถุประสงค์:  {objective}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirm} color="warning">
+            ยกเลิก
+          </Button>
+          <Button onClick={handleConfirmAndSubmit} color="primary" autoFocus>
+            ยืนยัน
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

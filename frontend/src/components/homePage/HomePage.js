@@ -2,7 +2,7 @@ import React from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
-import { FaCar, FaCheckCircle, FaClipboardList, FaSpinner } from 'react-icons/fa'; // Icons from react-icons
+import { FaCar, FaCheckCircle, FaClipboardList, FaSpinner } from 'react-icons/fa';
 
 // ข้อมูลสำหรับกราฟ
 const chartData = [
@@ -17,23 +17,23 @@ const chartData = [
 // Options สำหรับกราฟ
 const chartOptions = {
   title: "สถิติรายการจองของแต่ละสายงาน",
-  titleTextStyle: { fontSize: 24, fontWeight: "bold" },
-  legend: { textStyle: { fontSize: 14 } },
-  chartArea: { width: "70%" },
-  vAxis: { textStyle: { fontSize: 16 } },
-  hAxis: { textStyle: { fontSize: 14 } },
+  titleTextStyle: { fontSize: 18, fontWeight: "bold" },
+  legend: { textStyle: { fontSize: 12 } },
+  chartArea: { width: "85%" },
+  vAxis: { textStyle: { fontSize: 10 } },
+  hAxis: { textStyle: { fontSize: 12 } },
   colors: ['#007bff', '#28a745'],
   bar: { groupWidth: '80%' }
 };
 
-// Component สำหรับ Summary Card (ตัวแสดงผลรวม)
-const SummaryCard = ({ title, value, icon, className }) => {
+// Component สำหรับ Summary Card
+const SummaryCard = ({ title, icon, className, children }) => {
   return (
     <div className={`summary-card ${className}`}>
       <div className="card-icon">{icon}</div>
       <div className="card-content">
         <h3 className="card-title">{title}</h3>
-        <p className="card-value">{value}</p>
+        {children}
       </div>
     </div>
   );
@@ -50,6 +50,18 @@ const NavButton = ({ title, to, icon }) => {
 };
 
 const HomePage = () => {
+  const availableCarDetails = [
+    { id: 1, brand: "Toyota", model: "Camry", license: "กข 1234" },
+    { id: 2, brand: "Toyota", model: "Commuter", license: "งจ 5678" },
+    { id: 3, brand: "Isuzu", model: "D-Max", license: "ชฎ 9012" },
+  ];
+
+  // **New dynamic data for pending requests**
+  const pendingRequestsDetails = [
+    { id: 1, name: "คุณสมชาย", dept: "บัญชี", license: "นจ 1122", status: "อนุมัติ" },
+    { id: 2, name: "คุณสุชาดา", dept: "บุคคล", license: "กท 9876", status: "รออนุมัติ" },
+  ];
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -66,33 +78,79 @@ const HomePage = () => {
       <main className="dashboard-main">
         <div className="summary-cards-section">
           <SummaryCard 
-            title="จำนวนรถที่ว่าง" 
-            value="5 คัน" 
+            title={`รถที่ว่าง (${availableCarDetails.length} คัน)`} 
             icon={<FaCar size={40} />} 
             className="card-available" 
-          />
+          >
+            {availableCarDetails.length > 0 ? (
+              <table className="car-table">
+                <thead>
+                  <tr>
+                    <th>ยี่ห้อ</th>
+                    <th>รุ่น</th>
+                    <th>ทะเบียน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {availableCarDetails.map((car) => (
+                    <tr key={car.id}>
+                      <td>{car.brand}</td>
+                      <td>{car.model}</td>
+                      <td>{car.license}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>ไม่มีรถว่างในขณะนี้</p>
+            )}
+          </SummaryCard>
+          
+          {/* Updated "Pending Approval" card to show a table */}
           <SummaryCard 
-            title="การจองทั้งหมด" 
-            value="50 ครั้ง" 
-            icon={<FaClipboardList size={40} />} 
-            className="card-total" 
-          />
-          <SummaryCard 
-            title="รออนุมัติ" 
-            value="1 รายการ" 
+            title={`รายการอนุมัติแล้ว (${pendingRequestsDetails.length} รายการ)`} 
             icon={<FaSpinner size={40} />} 
             className="card-pending" 
-          />
-        </div>
+          >
+            {pendingRequestsDetails.length > 0 ? (
+              <table className="request-table">
+                <thead>
+                  <tr>
+                    <th>ชื่อผู้จอง</th>
+                    <th>แผนก</th>
+                    <th>ทะเบียนรถ</th>
+                    <th>สถานะ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pendingRequestsDetails.map((request) => (
+                    <tr key={request.id}>
+                      <td>{request.name}</td>
+                      <td>{request.dept}</td>
+                      <td>{request.license}</td>
+                      <td><span className="status pending">{request.status}</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>ไม่มีรายการรออนุมัติในวันนี้</p>
+            )}
+          </SummaryCard>
 
-        <div className="charts-section">
-          <Chart
-            chartType="BarChart"
-            width="100%"
-            height="400px"
-            data={chartData}
-            options={chartOptions}
-          />
+          <SummaryCard 
+            title="การจองทั้งหมด" 
+            icon={<FaClipboardList size={60} />} 
+            className="card-total chart-card"
+          >
+            <div className="chart-container">
+              <Chart
+                chartType="BarChart"
+                data={chartData}
+                options={chartOptions}
+              />
+            </div>
+          </SummaryCard>
         </div>
       </main>
     </div>

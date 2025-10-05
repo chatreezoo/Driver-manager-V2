@@ -204,102 +204,84 @@ const Profile = () => {
               >
                 Login
               </Button>
+              
             </div>
           </div>
         </div>
       ) : (
-        <div className="BOX__Book">
-            <div className="BOX">
-              <TableContainer component={Paper}>
-                <Table aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell align="right">ลำดับ</StyledTableCell>{" "}
-                      {/* Added "ลำดับ" column */}
-                      <StyledTableCell align="right">
-                        วันที่ใช้งาน
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        เวลาเริ่มใช้งาน
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        รถ-ทะเบียน
-                      </StyledTableCell>
-                      <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
-                      <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
-                      <StyledTableCell align="right">
-                        จำนวนผู้โดยสาร
-                      </StyledTableCell>
-                      <StyledTableCell align="right">แผนก</StyledTableCell>
-                      <StyledTableCell align="right">
-                        ผู้อนุมัติ
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        ปฏิเสธคำขอ
-                      </StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data.map((item, index) => (
-                      <StyledTableRow key={item.id}>
-                        <StyledTableCell component="th" scope="row">
-                          {index + 1}
-                        </StyledTableCell>{" "}
-                        {/* Added row number */}
-                        <StyledTableCell align="right">
-                          {dayjs(item.endDate).format("DD-MM-YYYY")}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.startTime}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.cars}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.driver}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.name}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.passengerCount}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {item.department}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <Button
-                            disabled={
-                              item.status === "รอดำเนินการ" ? false : true
-                            }
-                            variant="contained"
-                            startIcon={<ContentPasteIcon />}
-                            color="primary"
-                            onClick={() => handleClickOpen(item)}
-                          >
-                            ลงชื่อผู้อนุมัติ
-                          </Button>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <Button
-                            disabled={
-                              item.status === "รอดำเนินการ" ? false : true
-                            }
-                            variant="contained"
-                            startIcon={<DeleteIcon />}
-                            color="warning"
-                            onClick={() => handleRejectDialogOpen(item)}
-                          >
-                            ปฏิเสธ
-                          </Button>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
-          
+        <div className="BOX">
+          <TableContainer component={Paper}>
+            <Table aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="right">ลำดับ</StyledTableCell>{" "}
+                  {/* Added "ลำดับ" column */}
+                  <StyledTableCell align="right">วันที่ใช้งาน</StyledTableCell>
+                  <StyledTableCell align="right">
+                    เวลาเริ่มใช้งาน
+                  </StyledTableCell>
+                  <StyledTableCell align="right">รถ-ทะเบียน</StyledTableCell>
+                  <StyledTableCell align="right">ผู้ขับรถ</StyledTableCell>
+                  <StyledTableCell align="right">ผู้บันทึก</StyledTableCell>
+                  <StyledTableCell align="right">
+                    จำนวนผู้โดยสาร
+                  </StyledTableCell>
+                  <StyledTableCell align="right">แผนก</StyledTableCell>
+                  <StyledTableCell align="right">ผู้อนุมัติ</StyledTableCell>
+                  <StyledTableCell align="right">ปฏิเสธคำขอ</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((item, index) => (
+                  <StyledTableRow key={item.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {index + 1}
+                    </StyledTableCell>{" "}
+                    {/* Added row number */}
+                    <StyledTableCell align="right">
+                      {dayjs(item.endDate).format("DD-MM-YYYY")}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {item.startTime}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{item.cars}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {item.driver}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{item.name}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {item.passengerCount}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {item.department}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        disabled={item.status === "รอดำเนินการ" ? false : true}
+                        variant="contained"
+                        startIcon={<ContentPasteIcon />}
+                        color="primary"
+                        onClick={() => handleClickOpen(item)}
+                      >
+                        ลงชื่อผู้อนุมัติ
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        disabled={item.status === "รอดำเนินการ" ? false : true}
+                        variant="contained"
+                        startIcon={<DeleteIcon />}
+                        color="warning"
+                        onClick={() => handleRejectDialogOpen(item)}
+                      >
+                        ปฏิเสธ
+                      </Button>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       )}
       <Dialog
