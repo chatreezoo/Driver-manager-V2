@@ -42,6 +42,7 @@ router.post("/", (req, res) => {
     date: req.body.date,
     name: req.body.name,
     place: req.body.place,
+    passengers: req.body.passengers,
     department: req.body.department,
     objective: req.body.objective,
     startTime: req.body.startTime,
@@ -58,13 +59,14 @@ router.post("/", (req, res) => {
     driver,
     endDate,
     name,
+    passengers,
     department,
     objective,
     startTime,
     place,
     endTime,
     status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
 
   con.query(
     sql,
@@ -74,6 +76,7 @@ router.post("/", (req, res) => {
       schedule.driver,
       schedule.endDate,
       schedule.name,
+      schedule.passengers,
       schedule.department,
       schedule.objective,
       schedule.startTime,
