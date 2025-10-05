@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import './CarReturnForm.css'; // นำเข้าไฟล์ CSS
-import { MenuItem, Select } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import "./CarReturnForm.css"; // นำเข้าไฟล์ CSS
+import { MenuItem, Select } from "@mui/material";
 import axios from "../../axios";
-
 
 // สมมติว่ามีเลขไมล์ตอนยืมรถเก็บไว้ในระบบ
 // ในการใช้งานจริง คุณจะดึงค่านี้มาจากฐานข้อมูล เช่น จาก API
@@ -11,14 +10,16 @@ const initialMileage = 1000; // ตัวอย่างเลขไมล์ต
 const CarReturnForm = () => {
   // สร้าง state เพื่อเก็บข้อมูลจากฟอร์ม
   const [returnDetails, setReturnDetails] = useState({
-    mileage: '',
-    returnerName: '',
+    mileage: "",
+    returnerName: "",
     carPhoto1: null, // รูปภาพที่ 1
     carPhoto2: null, // รูปภาพที่ 2
   });
   const [data, setData] = useState("");
   const [sortedData, setSortedData] = useState([]);
-  
+  const [endmileage, setEndMileage] = useState("");
+  const [name, setName] = useState("");
+
   useEffect(() => {
     axios
       .get("schedule")
@@ -26,24 +27,28 @@ const CarReturnForm = () => {
         const sortedData = res.data.sort(
           (a, b) => new Date(a.startDate) - new Date(b.startDate)
         );
-        const filteredData = sortedData.filter(item => item.status ==="อนุมัติคำร้อง")
+        const filteredData = sortedData.filter(
+          (item) => item.status === "อนุมัติคำร้อง"
+        );
         setSortedData(filteredData);
-
       })
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(data,"001")
+  
 
   // สร้าง state สำหรับข้อความแจ้งเตือนข้อผิดพลาด
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงข้อมูลในช่อง input
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setError(''); // เคลียร์ error เมื่อผู้ใช้เริ่มกรอกใหม่
+    setError(""); // เคลียร์ error เมื่อผู้ใช้เริ่มกรอกใหม่
 
-    if (name.startsWith('carPhoto')) { // ตรวจสอบว่าเป็นการอัปโหลดรูปภาพ
+    console.log();
+
+    if (name.startsWith("carPhoto")) {
+      // ตรวจสอบว่าเป็นการอัปโหลดรูปภาพ
       setReturnDetails({
         ...returnDetails,
         [name]: files[0], // เก็บไฟล์รูปภาพที่เลือก
@@ -61,56 +66,46 @@ const CarReturnForm = () => {
     e.preventDefault();
 
     // 1. ตรวจสอบเงื่อนไขการกรอกเลขไมล์
-    const mileage = parseInt(returnDetails.mileage, 10);
-    
-    if (isNaN(mileage)) {
-        setError('กรุณากรอกเลขไมล์กลับเป็นตัวเลขเท่านั้น');
-        return;
+
+    if (isNaN(endmileage)) {
+      setError("กรุณากรอกเลขไมล์กลับเป็นตัวเลขเท่านั้น");
+      return;
     }
-    
-    if (mileage < initialMileage) {
-        setError(`เลขไมล์กลับ (ปัจจุบัน ${mileage}) ต้องมากกว่าเลขไมล์ตอนยืม (${initialMileage})`);
-        return;
+
+    if (endmileage < initialMileage) {
+      setError(
+        `เลขไมล์กลับ (ปัจจุบัน ${endmileage}) ต้องมากกว่าเลขไมล์ตอนยืม (${initialMileage})`
+      );
+      return;
     }
 
     // 2. ตรวจสอบเงื่อนไขการอัปโหลดรูปภาพ
     if (!returnDetails.carPhoto1 || !returnDetails.carPhoto2) {
-        setError('กรุณาอัปโหลดรูปภาพรถให้ครบทั้ง 2 ภาพ');
-        return;
+      setError("กรุณาอัปโหลดรูปภาพรถให้ครบทั้ง 2 ภาพ");
+      return;
     }
 
     // ถ้าผ่านเงื่อนไขทั้งหมด
-    console.log('ข้อมูลการคืนรถ:', returnDetails);
-    console.log('ข้อมูลที่ผ่านการตรวจสอบแล้ว:', {
-        ...returnDetails,
-        mileage: mileage,
-        carPhoto1: returnDetails.carPhoto1 ? returnDetails.carPhoto1.name : null,
-        carPhoto2: returnDetails.carPhoto2 ? returnDetails.carPhoto2.name : null,
+    console.log("ข้อมูลการคืนรถ:", returnDetails);
+    console.log("ข้อมูลที่ผ่านการตรวจสอบแล้ว:", {
+      ...returnDetails,
+      endmileage: endmileage,
+      carPhoto1: returnDetails.carPhoto1 ? returnDetails.carPhoto1.name : null,
+      carPhoto2: returnDetails.carPhoto2 ? returnDetails.carPhoto2.name : null,
     });
 
-    // คุณสามารถเพิ่มโค้ดเพื่อส่งข้อมูลนี้ไปยัง API หรือฐานข้อมูลได้ที่นี่
-    // สำหรับการส่งรูปภาพผ่าน API มักจะใช้ FormData
-    // ตัวอย่าง:
-    // const formData = new FormData();
-    // formData.append('mileage', mileage);
-    // formData.append('returnerName', returnDetails.returnerName);
-    // if (returnDetails.carPhoto1) formData.append('carPhoto1', returnDetails.carPhoto1);
-    // if (returnDetails.carPhoto2) formData.append('carPhoto2', returnDetails.carPhoto2);
-    // axios.post('/api/return-car', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // });
-
-    alert('บันทึกข้อมูลการคืนรถเรียบร้อยแล้ว!');
+    alert("บันทึกข้อมูลการคืนรถเรียบร้อยแล้ว!");
 
     // รีเซ็ตฟอร์มหลังจากส่งข้อมูลสำเร็จ
     setReturnDetails({
-      mileage: '',
-      returnerName: '',
+      mileage: "",
+      returnerName: "",
       carPhoto1: null,
       carPhoto2: null,
     });
+    setName("");
+    setEndMileage("");
+    setData("")
   };
 
   return (
@@ -118,25 +113,30 @@ const CarReturnForm = () => {
       <h2 className="form-title">แบบฟอร์มคืนรถ</h2>
       <form onSubmit={handleSubmit} className="return-car-form">
         <div className="form-group">
-        <label htmlFor="mileage">กรุณาเลือกรายการที่ต้องการคืน:</label>
-        <Select fullWidth value={data} onChange={(e) => setData(e.target.value)}>
-              {sortedData.map((listItem) => (
-                <MenuItem key={listItem.plate} value={listItem}>{`ผู้จอง: ${listItem.name} แผนก: ${listItem.department} ทะเบียนรถ: ${listItem.cars} `}</MenuItem>
-              ))}
-            </Select>
+          <label htmlFor="mileage">กรุณาเลือกรายการที่ต้องการคืน:</label>
+          <Select
+            fullWidth
+            value={data}
+            onChange={(e) => setData(e.target.value)}
+          >
+            {sortedData.map((listItem) => (
+              <MenuItem
+                key={listItem.plate}
+                value={listItem}
+              >{`ผู้จอง: ${listItem.name} แผนก: ${listItem.department} ทะเบียนรถ: ${listItem.cars} `}</MenuItem>
+            ))}
+          </Select>
 
           <label htmlFor="mileage">เลขไมล์ไป:</label>
           <input
             type="number"
             id="mileage"
             name="mileage"
-            value={data?.startMileage}
-            onChange={handleChange}
+            value={data?.startMileage??"-"}
             required
             placeholder="กรอกเลขไมล์ล่าสุด"
             disabled
           />
-
         </div>
         <div className="form-group">
           <label htmlFor="mileage">เลขไมล์กลับ:</label>
@@ -144,13 +144,13 @@ const CarReturnForm = () => {
             type="number"
             id="mileage"
             name="mileage"
-            value={returnDetails.endmileage}
-            onChange={handleChange}
+            value={endmileage}
+            onChange={(e) => setEndMileage(e.target.value)}
             required
             placeholder="กรอกเลขไมล์ล่าสุด"
           />
         </div>
-        
+
         {error && <p className="error-message">{error}</p>}
 
         <div className="form-group">
@@ -159,8 +159,8 @@ const CarReturnForm = () => {
             type="text"
             id="returnerName"
             name="returnerName"
-            value={returnDetails.returnerName}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
             placeholder="ชื่อ-นามสกุล ผู้คืนรถ"
           />
@@ -179,11 +179,13 @@ const CarReturnForm = () => {
           />
           {returnDetails.carPhoto1 && (
             <div className="image-preview-wrapper">
-              <p className="file-name">ไฟล์ที่เลือก: {returnDetails.carPhoto1.name}</p>
-              <img 
-                src={URL.createObjectURL(returnDetails.carPhoto1)} 
-                alt="Car Preview 1" 
-                className="image-preview" 
+              <p className="file-name">
+                ไฟล์ที่เลือก: {returnDetails.carPhoto1.name}
+              </p>
+              <img
+                src={URL.createObjectURL(returnDetails.carPhoto1)}
+                alt="Car Preview 1"
+                className="image-preview"
               />
             </div>
           )}
@@ -202,11 +204,13 @@ const CarReturnForm = () => {
           />
           {returnDetails.carPhoto2 && (
             <div className="image-preview-wrapper">
-              <p className="file-name">ไฟล์ที่เลือก: {returnDetails.carPhoto2.name}</p>
-              <img 
-                src={URL.createObjectURL(returnDetails.carPhoto2)} 
-                alt="Car Preview 2" 
-                className="image-preview" 
+              <p className="file-name">
+                ไฟล์ที่เลือก: {returnDetails.carPhoto2.name}
+              </p>
+              <img
+                src={URL.createObjectURL(returnDetails.carPhoto2)}
+                alt="Car Preview 2"
+                className="image-preview"
               />
             </div>
           )}
