@@ -2,7 +2,12 @@ import React from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
-import { FaCar, FaCheckCircle, FaClipboardList, FaSpinner } from 'react-icons/fa';
+import {
+  FaCar,
+  FaCheckCircle,
+  FaClipboardList,
+  FaSpinner,
+} from "react-icons/fa";
 
 // ข้อมูลสำหรับกราฟ
 const chartData = [
@@ -22,8 +27,8 @@ const chartOptions = {
   chartArea: { width: "85%" },
   vAxis: { textStyle: { fontSize: 10 } },
   hAxis: { textStyle: { fontSize: 12 } },
-  colors: ['#007bff', '#28a745'],
-  bar: { groupWidth: '80%' }
+  colors: ["#007bff", "#28a745"],
+  bar: { groupWidth: "80%" },
 };
 
 // Component สำหรับ Summary Card
@@ -58,8 +63,20 @@ const HomePage = () => {
 
   // **New dynamic data for pending requests**
   const pendingRequestsDetails = [
-    { id: 1, name: "คุณสมชาย", dept: "บัญชี", license: "นจ 1122", status: "อนุมัติ" },
-    { id: 2, name: "คุณสุชาดา", dept: "บุคคล", license: "กท 9876", status: "รออนุมัติ" },
+    {
+      id: 1,
+      name: "คุณสมชาย",
+      dept: "บัญชี",
+      license: "นจ 1122",
+      status: "อนุมัติ",
+    },
+    {
+      id: 2,
+      name: "คุณสุชาดา",
+      dept: "บุคคล",
+      license: "กท 9876",
+      status: "รออนุมัติ",
+    },
   ];
 
   return (
@@ -71,16 +88,20 @@ const HomePage = () => {
       <nav className="dashboard-nav">
         <NavButton title="จองรถ" to="/driver" icon={<FaCar />} />
         <NavButton title="อนุมัติ" to="/profile" icon={<FaCheckCircle />} />
-        <NavButton title="รายการจอง" to="/bookingReport" icon={<FaClipboardList />} />
+        <NavButton
+          title="รายการจอง"
+          to="/bookingReport"
+          icon={<FaClipboardList />}
+        />
         <NavButton title="คืนรถ" to="/carReturnForm" icon={<FaCar />} />
       </nav>
 
       <main className="dashboard-main">
         <div className="summary-cards-section">
-          <SummaryCard 
-            title={`รถที่ว่าง (${availableCarDetails.length} คัน)`} 
-            icon={<FaCar size={40} />} 
-            className="card-available" 
+          <SummaryCard
+            title={`รถที่ว่าง (${availableCarDetails.length} คัน)`}
+            icon={<FaCar size={40} />}
+            className="card-available"
           >
             {availableCarDetails.length > 0 ? (
               <table className="car-table">
@@ -105,42 +126,48 @@ const HomePage = () => {
               <p>ไม่มีรถว่างในขณะนี้</p>
             )}
           </SummaryCard>
-          
-          {/* Updated "Pending Approval" card to show a table */}
-          <SummaryCard 
-            title={`รายการอนุมัติแล้ว (${pendingRequestsDetails.length} รายการ)`} 
-            icon={<FaSpinner size={40} />} 
-            className="card-pending" 
-          >
-            {pendingRequestsDetails.length > 0 ? (
-              <table className="request-table">
-                <thead>
-                  <tr>
-                    <th>ชื่อผู้จอง</th>
-                    <th>แผนก</th>
-                    <th>ทะเบียนรถ</th>
-                    <th>สถานะ</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pendingRequestsDetails.map((request) => (
-                    <tr key={request.id}>
-                      <td>{request.name}</td>
-                      <td>{request.dept}</td>
-                      <td>{request.license}</td>
-                      <td><span className="status pending">{request.status}</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>ไม่มีรายการรออนุมัติในวันนี้</p>
-            )}
-          </SummaryCard>
 
-          <SummaryCard 
-            title="การจองทั้งหมด" 
-            icon={<FaClipboardList size={60} />} 
+          {/* Updated "Pending Approval" card to show a table */}
+          <Link to="/approveTable">
+            <SummaryCard
+              title={`รายการอนุมัติแล้ว (${pendingRequestsDetails.length} รายการ)`}
+              icon={<FaSpinner size={40} />}
+              className="card-pending"
+            >
+              {pendingRequestsDetails.length > 0 ? (
+                <table className="request-table">
+                  <thead>
+                    <tr>
+                      <th>ชื่อผู้จอง</th>
+                      <th>แผนก</th>
+                      <th>ทะเบียนรถ</th>
+                      <th>สถานะ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pendingRequestsDetails.map((request) => (
+                      <tr key={request.id}>
+                        <td>{request.name}</td>
+                        <td>{request.dept}</td>
+                        <td>{request.license}</td>
+                        <td>
+                          <span className="status pending">
+                            {request.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>ไม่มีรายการรออนุมัติในวันนี้</p>
+              )}
+            </SummaryCard>
+          </Link>
+
+          <SummaryCard
+            title="การจองทั้งหมด"
+            icon={<FaClipboardList size={60} />}
             className="card-total chart-card"
           >
             <div className="chart-container">
