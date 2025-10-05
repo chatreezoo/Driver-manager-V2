@@ -8,6 +8,8 @@ import Driver from "./components/bookDriver/Driver";
 // import Contact from "./components/contact/Contact";
 import BookingReport from "./components/bookingReport/BookingReport";
 import CarReturnForm from "./components/carReturnForm/CarReturnForm";
+import ApproveTable from "./components/bookingReport/ApproveTable";
+
 
 function App() {
   return (
@@ -40,6 +42,10 @@ function App() {
 
           <Route path="/carReturnForm">
             <CarReturnForm />
+          </Route>
+
+          <Route path="/approveTable">
+            <ApproveTable />
           </Route>
 
         </Switch>
