@@ -64,7 +64,7 @@ const ApproveTable = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  
+  console.log(data,"1111")
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CarReturnForm.css'; // นำเข้าไฟล์ CSS
+import { MenuItem, Select } from '@mui/material';
+import axios from "../../axios";
+
 
 // สมมติว่ามีเลขไมล์ตอนยืมรถเก็บไว้ในระบบ
 // ในการใช้งานจริง คุณจะดึงค่านี้มาจากฐานข้อมูล เช่น จาก API
@@ -13,7 +16,25 @@ const CarReturnForm = () => {
     carPhoto1: null, // รูปภาพที่ 1
     carPhoto2: null, // รูปภาพที่ 2
   });
+  const [data, setData] = useState("");
+  const [sortedData, setSortedData] = useState([]);
   
+  useEffect(() => {
+    axios
+      .get("schedule")
+      .then((res) => {
+        const sortedData = res.data.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        );
+        const filteredData = sortedData.filter(item => item.status ==="อนุมัติคำร้อง")
+        setSortedData(filteredData);
+
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(data,"001")
+
   // สร้าง state สำหรับข้อความแจ้งเตือนข้อผิดพลาด
   const [error, setError] = useState('');
 
@@ -97,16 +118,25 @@ const CarReturnForm = () => {
       <h2 className="form-title">แบบฟอร์มคืนรถ</h2>
       <form onSubmit={handleSubmit} className="return-car-form">
         <div className="form-group">
+        <label htmlFor="mileage">กรุณาเลือกรายการที่ต้องการคืน:</label>
+        <Select fullWidth value={data} onChange={(e) => setData(e.target.value)}>
+              {sortedData.map((listItem) => (
+                <MenuItem key={listItem.plate} value={listItem}>{`ผู้จอง: ${listItem.name} แผนก: ${listItem.department} ทะเบียนรถ: ${listItem.cars} `}</MenuItem>
+              ))}
+            </Select>
+
           <label htmlFor="mileage">เลขไมล์ไป:</label>
           <input
             type="number"
             id="mileage"
             name="mileage"
-            value={returnDetails.startmileage}
+            value={data?.startMileage}
             onChange={handleChange}
             required
             placeholder="กรอกเลขไมล์ล่าสุด"
+            disabled
           />
+
         </div>
         <div className="form-group">
           <label htmlFor="mileage">เลขไมล์กลับ:</label>
