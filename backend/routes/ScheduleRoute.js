@@ -21,7 +21,8 @@ router.get("/home", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  const sql = "SELECT * FROM schedule";
+  const sql = "SELECT s.*, c.type FROM schedule s JOIN cars c ON s.cars = c.plate";
+
 
   // Use the connection pool to handle database queries
   con.query(sql, function(err, result) {

@@ -56,22 +56,17 @@ const NavButton = ({ title, to, icon }) => {
 };
 
 const HomePage = () => {
-  const availableCarDetails = [
-    { id: 1, brand: "Toyota", model: "Camry", license: "กข 1234" },
-    { id: 2, brand: "Toyota", model: "Commuter", license: "งจ 5678" },
-    { id: 3, brand: "Isuzu", model: "D-Max", license: "ชฎ 9012" },
-  ];
   const [data, setData] = useState([]);
 console.log(data,"5555")
 
   useEffect(() => {
     axios
-      .get("schedule")
+      .get("cars")
       .then((res) => {
         const sortedData = res.data.sort(
           (a, b) => new Date(a.startDate) - new Date(b.startDate)
         );
-        const filteredData = sortedData.filter(item => item.status ==="อนุมัติคำร้อง")
+        const filteredData = sortedData.filter(item => item.status ==="ว่าง")
         console.log(sortedData)
         setData(filteredData);
       })
@@ -124,16 +119,14 @@ console.log(data,"5555")
                 <thead>
                   <tr>
                     <th>ยี่ห้อ</th>
-                    <th>รุ่น</th>
                     <th>ทะเบียน</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.map((car) => (
                     <tr key={car.id}>
-                      <td>{car.brand}</td>
-                      <td>{car.model}</td>
-                      <td>{car.license}</td>
+                      <td>{car.type}</td>
+                      <td>{car.plate}</td>
                     </tr>
                   ))}
                 </tbody>
